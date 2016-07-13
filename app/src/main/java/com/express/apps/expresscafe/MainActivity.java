@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void openAdminLoginPage(View view){
-        Intent intent = new Intent(this,AdminLoginActivity.class);
+        Intent intent = new Intent(this,LoginActivity.class);
 
         startActivity(intent);
     }

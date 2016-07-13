@@ -35,11 +35,7 @@
         <!-- </provider> -->
 
         <activity android:name=".MenuActivity" />
-        <activity
-            android:name=".AdminLoginActivity"
-            android:label="@string/title_activity_admin_login">
-
-        </activity>
+        <activity android:name=".LoginActivity"></activity>
     </application>
 
 </manifest>
