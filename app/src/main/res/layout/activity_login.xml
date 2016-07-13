@@ -23,7 +23,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:id="@+id/errorMsg"
+        android:id="@+id/msg"
         android:layout_gravity="center_horizontal" />
 
     <ScrollView
@@ -79,6 +79,17 @@
                 android:text="@string/action_sign_in"
                 android:textStyle="bold"
                 android:onClick="signInButton"/>
+
+            <Button
+                style="?android:textAppearanceSmall"
+                android:id="@+id/sign_out_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/action_sign_out"
+                android:textStyle="bold"
+                android:onClick="signOutButton"
+                android:layout_gravity="center_horizontal" />
 
         </LinearLayout>
     </ScrollView>

@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -16,32 +17,48 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.AuthResult;
 
-public class LoginActivity extends AppCompatActivity{
+public class LoginActivity extends BaseActivity{
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
-    private static final String TAG = "EmailPassword";
+    private static final String TAG = "AdminLogin";
+    TextView msgArea;
+    Button signOut;
+    Button signIn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         mAuth = FirebaseAuth.getInstance();
+        msgArea = (TextView) findViewById(R.id.msg);
+        signOut=(Button) findViewById(R.id.sign_out_button);
+        signIn=(Button) findViewById(R.id.email_sign_in_button);
 
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                Log.i(TAG,"Status Changed");
 
                 FirebaseUser user = firebaseAuth.getCurrentUser();
                 if (user != null) {
                     // User is signed in
                     Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
+                    msgArea.setText("Welcome "+user.getEmail());
+
+                    signOut.setVisibility(View.VISIBLE);
+                    signIn.setVisibility(View.GONE);
+
 
                 } else {
+
+                    msgArea.setText("Admin Login");
                     // User is signed out
                     Log.d(TAG, "onAuthStateChanged:signed_out");
+                    signOut.setVisibility(View.GONE);
+                    signIn.setVisibility(View.VISIBLE);
                 }
 
-
+                hideProgressDialog();
             }
         };
 
@@ -54,13 +71,6 @@ public class LoginActivity extends AppCompatActivity{
         mAuth.addAuthStateListener(mAuthListener);
     }
 
-    @Override
-    protected void onStop() {
-        super.onStop();
-        if (mAuthListener != null) {
-            mAuth.removeAuthStateListener(mAuthListener);
-        }
-    }
 
     public void signInButton(View view){
 
@@ -73,7 +83,26 @@ public class LoginActivity extends AppCompatActivity{
 
     }
 
+    public void signOutButton(View view){
+        signOut();
+
+
+        Intent intent = new Intent(this, MainActivity.class);
+
+        startActivity(intent);
+
+    }
+
     private void signIn(final String email, String password) {
+
+        if(email.isEmpty() || password.isEmpty() ){
+
+            msgArea.setText("Email and Password must be entered");
+
+            return;
+        }
+
+        showProgressDialog();
 
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -84,21 +113,19 @@ public class LoginActivity extends AppCompatActivity{
                         // If sign in fails, display a message to the user. If sign in succeeds
                         // the auth state listener will be notified and logic to handle the
                         // signed in user can be handled in the listener.
-                        TextView error = (TextView) findViewById(R.id.errorMsg);
+
 
                         if (!task.isSuccessful()) {
                             Log.w(TAG, "signInWithEmail", task.getException());
                             Toast.makeText(LoginActivity.this, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
 
-                            error.setText(task.getException().getMessage());
+                            msgArea.setText(task.getException().getMessage());
 
-                        }else{
-                            Log.i(TAG,"User logged in successfully "+ mAuth.getCurrentUser().getUid());
-
-                            error.setText("Welcome "+mAuth.getCurrentUser().getEmail());
 
                         }
+
+                        hideProgressDialog();
 
                     }
                 });
@@ -106,6 +133,7 @@ public class LoginActivity extends AppCompatActivity{
     }
 
     private void signOut() {
+        showProgressDialog();
         mAuth.signOut();
     }
 

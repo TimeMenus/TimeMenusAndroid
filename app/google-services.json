@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "379174658751",
+    "firebase_url": "https://express-cafe-a7687.firebaseio.com",
+    "project_id": "express-cafe-a7687",
+    "storage_bucket": "express-cafe-a7687.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:379174658751:android:b76a9e855575abac",
+        "android_client_info": {
+          "package_name": "com.express.apps.expresscafe"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "379174658751-f3da4m443rng74q1kb47km4a8h9s8ki6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAf9Isa5pUzEpQUk7hU-7mlaVDtSyfTZK8"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
