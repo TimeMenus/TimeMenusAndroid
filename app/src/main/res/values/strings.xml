@@ -20,4 +20,20 @@
     <string name="loading">Loading ..</string>
     <string name="action_sign_out">Sign Out</string>
 
+
+    <!-- Strings related to Admin Page -->
+    <string name="date_button_set">Pick Date</string>
+    <string name="date_selected">Date: </string>
+    <string name="date_hint">Select the Date</string>
+    <string-array name="menu_arrays">
+        <item>Pick the Menu Item</item>
+        <item>Soup</item>
+        <item>Entrée</item>
+        <item>Deli</item>
+        <item>Pasta</item>
+        <item>Grill</item>
+    </string-array>
+    <string name="item_prompt">Pick the Item</string>
+    <string name="item_name">Item Name:</string>
+
 </resources>

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.express.apps.expresscafe.AdminActivity">
+
+    <EditText
+        android:id="@+id/picked_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:layout_weight=".5"
+        android:gravity="center"
+        android:hint="@string/date_hint"
+        android:textAlignment="gravity"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <Spinner
+        android:id="@+id/menuitems"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/picked_date"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="25dp"
+        android:prompt="@string/item_prompt" />
+
+
+    <EditText
+        android:id="@+id/item_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="25dp"
+        android:hint="Item Name"
+        android:padding="10dp"
+        android:layout_marginRight="25dp"
+        android:background="@drawable/border_input"
+        android:inputType="text"
+        android:singleLine="true"
+        android:layout_below="@+id/menuitems"/>
+
+    <EditText
+        android:id="@+id/item_desc"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="25dp"
+        android:hint="Item Description"
+        android:padding="10dp"
+        android:layout_marginRight="25dp"
+        android:background="@drawable/border_input"
+        android:singleLine="false"
+        android:inputType="textMultiLine"
+        android:layout_below="@+id/item_name"/>
+</RelativeLayout>
