@@ -9,6 +9,34 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.express.apps.expresscafe.AdminActivity">
 
+
+    <EditText
+        android:id="@+id/edit_note"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="25dp"
+        android:hint=""
+        android:padding="10dp"
+        android:layout_marginRight="25dp"
+        android:background="@drawable/border_input"
+        android:singleLine="false"
+        android:inputType="textMultiLine"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Save Note"
+        android:id="@+id/save_note"
+        android:layout_gravity="center"
+        android:layout_centerHorizontal="true"
+        android:onClick="saveNote"
+        android:layout_below="@+id/edit_note"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginRight="25dp"
+        android:padding="10dp"/>
+
     <EditText
         android:id="@+id/picked_date"
         android:layout_width="wrap_content"
@@ -19,6 +47,7 @@
         android:gravity="center"
         android:hint="@string/date_hint"
         android:textAlignment="gravity"
+        android:layout_below="@+id/save_note"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <Spinner
@@ -58,4 +87,20 @@
         android:singleLine="false"
         android:inputType="textMultiLine"
         android:layout_below="@+id/item_name"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Save this Item"
+        android:id="@+id/save_button"
+        android:layout_gravity="center"
+        android:layout_centerHorizontal="true"
+        android:onClick="saveItem"
+        android:layout_below="@+id/item_desc"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginRight="25dp"
+        android:padding="10dp"/>
+
+
 </RelativeLayout>

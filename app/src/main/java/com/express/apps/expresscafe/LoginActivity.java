@@ -109,6 +109,8 @@ public class LoginActivity extends BaseActivity{
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         Log.d(TAG, "signInWithEmail:onComplete:" + task.isSuccessful());
+                        Intent i = new Intent(LoginActivity.this, AdminActivity.class);
+                        startActivity(i);
 
                         // If sign in fails, display a message to the user. If sign in succeeds
                         // the auth state listener will be notified and logic to handle the

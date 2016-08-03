@@ -1,17 +1,18 @@
 package com.express.apps.expresscafe.models;
 
+import android.webkit.HttpAuthHandler;
+
 import java.util.HashMap;
-import java.util.List;
 
 /**
  * Created by fabdin on 8/2/2016.
  */
 public class Menu {
     String note;
-    String date;
 //    List<ItemWithKey> items;
+    private HashMap<String, Item> items;
+    String date;
 
-    HashMap<String,Object> items;
 
 
 
@@ -43,11 +44,13 @@ public class Menu {
 //    }
 
 
-    public HashMap<String, Object> getItems() {
+    public HashMap<String, Item> getItems() {
         return items;
     }
 
-    public void setItems(HashMap<String, Object> items) {
+
+
+    public void setItems(HashMap<String, Item> items) {
         this.items = items;
     }
 

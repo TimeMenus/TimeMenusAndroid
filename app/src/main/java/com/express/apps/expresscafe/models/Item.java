@@ -5,10 +5,10 @@ package com.express.apps.expresscafe.models;
  */
 public class Item {
     String categoryId;
-//    String dashboard;
+    Boolean dashboard;
     String description;
     String name;
-//    Picture picture;
+    Picture picture;
 
     public String getCategoryId() {
         return categoryId;
@@ -18,13 +18,13 @@ public class Item {
         this.categoryId = categoryId;
     }
 
-//    public String getDashboard() {
-//        return dashboard;
-//    }
-//
-//    public void setDashboard(String dashboard) {
-//        this.dashboard = dashboard;
-//    }
+    public Boolean getDashboard() {
+        return dashboard;
+    }
+
+    public void setDashboard(Boolean dashboard) {
+        this.dashboard = dashboard;
+    }
 
     public String getDescription() {
         return description;
@@ -42,11 +42,11 @@ public class Item {
         this.name = name;
     }
 
-//    public Picture getPicture() {
-//        return picture;
-//    }
-//
-//    public void setPicture(Picture picture) {
-//        this.picture = picture;
-//    }
+    public Picture getPicture() {
+        return picture;
+    }
+
+    public void setPicture(Picture picture) {
+        this.picture = picture;
+    }
 }

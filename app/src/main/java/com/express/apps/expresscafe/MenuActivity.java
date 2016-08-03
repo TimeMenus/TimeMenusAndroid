@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.widget.ExpandableListView;
 
+import com.express.apps.expresscafe.models.Item;
 import com.express.apps.expresscafe.models.Menu;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -59,13 +60,24 @@ public class MenuActivity extends ExpandableListActivity {
                 Iterator it= dataSnapshot.getChildren().iterator();
                 while(it.hasNext()){
 
-                    DataSnapshot menu=(DataSnapshot)it.next();
+                    DataSnapshot menu=(DataSnapshot) it.next();
 
-                    Menu m=menu.getValue(Menu.class);
+//                    Menu m=menu.getValue();
 
-                    Log.d(TAG, "Menu: " + m.toString());
-                    Log.d(TAG, "Menu: " + m.getItems());
+//                    Log.d(TAG, "Menu: " + m.toString());
+                    Log.d(TAG, "Menu: " + menu.getValue(Menu.class).getItems());
 
+                    Iterator itemsItertr = menu.getValue(Menu.class).getItems().entrySet().iterator();
+                    while (itemsItertr.hasNext()){
+                        Map.Entry pair = (Map.Entry)itemsItertr.next();
+
+                            Item itemVal = (Item)pair.getValue();
+
+                            System.out.println(pair.getKey() + " : CategoryID: " + itemVal.getCategoryId() + " Name: " + itemVal.getName());
+
+                    }
+
+//                    Log.d(TAG, "Menu: " + menu.getKey());
                 }
 //                Iterator it= map.entrySet().iterator();
 ////

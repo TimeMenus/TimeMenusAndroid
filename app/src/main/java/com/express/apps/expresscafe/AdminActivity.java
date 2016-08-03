@@ -2,6 +2,7 @@ package com.express.apps.expresscafe;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
+import android.nfc.Tag;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -23,10 +24,14 @@ public class AdminActivity extends Activity implements OnClickListener {
     private SimpleDateFormat dateFormatter;
     private EditText itemName;
     private EditText itemDesc;
+    private Spinner menuItem;
+    private EditText note;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_admin);
 
         //for menu drop down item
@@ -37,16 +42,12 @@ public class AdminActivity extends Activity implements OnClickListener {
         ArrayAdapter adapter = ArrayAdapter.createFromResource(this, R.array.menu_arrays, R.layout.spinner_textview_align);
         // Set the layout to use for each dropdown item
         adapter.setDropDownViewResource(R.layout.spinner_textview_align);
-
         countryView.setAdapter(adapter);
 
 //        For the calendar and date
         dateFormatter = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
-
         dateView = (TextView) findViewById(R.id.picked_date);
-
         setDateTimeField();
-
     }
 
     private void setDateTimeField() {
@@ -70,7 +71,24 @@ public class AdminActivity extends Activity implements OnClickListener {
         }
     }
 
-    //for text boxes
+    public void saveItem(View view) {
+        itemName = (EditText) findViewById(R.id.item_name);
+        itemDesc = (EditText) findViewById(R.id.item_desc);
+        menuItem = (Spinner) findViewById(R.id.menuitems);
 
+        String itemNameStr = itemName.getText().toString();
+        String itemDescStr = itemDesc.getText().toString();
+        String dateStr = dateView.getText().toString();
+        String menuItemSelStr = menuItem.getSelectedItem().toString();
+        Log.d("SAVE", itemName.getText().toString());
+        Log.d("SAVE", itemDesc.getText().toString());
+        Log.d("SAVE", dateView.getText().toString());
+        Log.d("SAVE", menuItem.getSelectedItem().toString());
 
+    }
+
+    public void saveNote(View view) {
+        note = (EditText) findViewById(R.id.edit_note);
+        System.out.println("Entered note: " + note.getText().toString());
+    }
 }
