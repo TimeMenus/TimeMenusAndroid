@@ -1,6 +1,5 @@
 package com.express.apps.expresscafe;
 
-import android.app.ActionBar;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -8,19 +7,14 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.ProgressBar;
 
 import com.express.apps.expresscafe.models.Menu;
-import com.express.apps.expresscafe.services.menuesService;
+import com.express.apps.expresscafe.services.MenuService;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
 
 public class AdminMainActivity extends AppCompatActivity {
 
@@ -49,13 +43,13 @@ public class AdminMainActivity extends AppCompatActivity {
 //        spinner = (ProgressBar)findViewById(R.id.progressBar1);
         note = (EditText) findViewById(R.id.edit_note);
 
-        todayDate = menuesService.getTodayDate();
+//        todayDate = MenuService.getTodayDate();
 
 //        spinner.setVisibility(View.VISIBLE);
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("menues/-KOG_crFtM-wgOm6BKuf");
-        System.out.println("menuesService.keyforTodayDate(todayDate): " +menuesService.keyforTodayDate(todayDate));
+        DatabaseReference myRef = database.getReference("menues/-KOtT5w5ICdzgFgWNlcL");
+//        System.out.println("MenuService.keyforTodayDate(todayDate): " +MenuService.keyforTodayDate(todayDate));
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {

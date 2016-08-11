@@ -12,6 +12,17 @@ public class Item {
     String name;
     Picture picture;
 
+    public Item() {
+    }
+
+    public Item(String key, Boolean dashboard, String description, String name, Picture pic) {
+        this.key=key;
+        this.dashboard=dashboard;
+        this.description=description;
+        this.name=name;
+        this.picture=pic;
+    }
+
     public String getKey() {
         return key;
     }

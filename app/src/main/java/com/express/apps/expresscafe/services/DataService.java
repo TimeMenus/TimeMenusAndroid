@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 
 /**
  * Created by fabdin on 8/3/2016.
@@ -23,13 +24,44 @@ import java.util.List;
 public class DataService {
 
     private static FirebaseDatabase database;
+    private static List<Category> categories =new ArrayList<>();
 
     public static DataService newInstance() {
 
         database = FirebaseDatabase.getInstance();
         DataService ds = new DataService();
 
+        setListeners();
+
         return ds;
+    }
+
+    private static void setListeners() {
+        DatabaseReference categoriesRef = database.getReference("categories");
+        categoriesRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                Iterator it=dataSnapshot.getChildren().iterator();
+                while(it.hasNext()){
+                    DataSnapshot ds=(DataSnapshot) it.next();
+                    Category c=new Category();
+                    c.setKey(ds.getKey());
+                    c.setName((String)ds.getValue());
+
+                    categories.add(c);
+                }
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+
+
     }
 
     public Menu getTodayMenu(){
@@ -48,37 +80,6 @@ public class DataService {
 
 
     public List<Category> getCategories(String key){
-
-        final List<Category> categories =new ArrayList<>();
-
-
-        DatabaseReference categoriesRef = database.getReference("categories");
-
-        categoriesRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-
-                Iterator it=dataSnapshot.getChildren().iterator();
-                while(it.hasNext()){
-                    DataSnapshot ds=(DataSnapshot) it.next();
-                    Category c=new Category();
-                    c.setKey(ds.getKey());
-                    c.setName((String)ds.getValue());
-
-                    categories.add(c);
-
-
-                    Log.d("DataService ", ds.getKey());
-                }
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-
 
         return categories;
     }

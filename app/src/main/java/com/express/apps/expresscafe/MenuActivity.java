@@ -9,8 +9,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.widget.ExpandableListView;
 
+import com.express.apps.expresscafe.models.Category;
 import com.express.apps.expresscafe.models.Item;
 import com.express.apps.expresscafe.models.Menu;
+import com.express.apps.expresscafe.services.DataService;
+import com.express.apps.expresscafe.services.UtilsService;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -21,6 +24,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 public class MenuActivity extends ExpandableListActivity {
@@ -29,19 +33,24 @@ public class MenuActivity extends ExpandableListActivity {
     private ArrayList<Object> childItems = new ArrayList<Object>();
 
     String TAG="Express Db";
+    FirebaseDatabase database = null;
+    DataService dataService = null;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//       ExpandableListView expandableList = (ExpandableListView) findViewById(R.id.menuListView);
+
         ExpandableListView expandableList = getExpandableListView();
         expandableList.setDividerHeight(2);
         expandableList.setGroupIndicator(null);
         expandableList.setClickable(true);
 
+        dataService = DataService.newInstance();
+
+
         setGroupParents();
-        setChildData();
+//        setChildData();
 
         MyExpandableAdapter adapter = new MyExpandableAdapter(parentItems, childItems);
 
@@ -50,7 +59,22 @@ public class MenuActivity extends ExpandableListActivity {
         expandableList.setOnChildClickListener(this);
 
 
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
+    }
+
+    public void setGroupParents() {
+
+
+        List<Category> cats=dataService.getCategories(null);
+
+        for(Category c: cats){
+            parentItems.add(c.getName());
+        }
+
+
+    }
+
+    public void setChildData() {
+
         DatabaseReference myRef = database.getReference("menues");
 
         myRef.addValueEventListener(new ValueEventListener() {
@@ -58,36 +82,42 @@ public class MenuActivity extends ExpandableListActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
 
                 Iterator it= dataSnapshot.getChildren().iterator();
+
                 while(it.hasNext()){
 
                     DataSnapshot menu=(DataSnapshot) it.next();
 
-//                    Menu m=menu.getValue();
+                    String date=menu.getValue(Menu.class).getDate();
 
-//                    Log.d(TAG, "Menu: " + m.toString());
-                    Log.d(TAG, "Menu: " + menu.getValue(Menu.class).getItems());
 
-                    Iterator itemsItertr = menu.getValue(Menu.class).getItems().entrySet().iterator();
-                    while (itemsItertr.hasNext()){
-                        Map.Entry pair = (Map.Entry)itemsItertr.next();
 
-                            Item itemVal = (Item)pair.getValue();
+                    if(date.equals(UtilsService.getTodayDate())) {
 
-                            System.out.println(pair.getKey() + " : CategoryID: " + itemVal.getCategoryId() + " Name: " + itemVal.getName());
+                        Log.d(TAG, "Menu: " + menu.getValue(Menu.class).getDate());
 
+                        HashMap<String,Item> items =  menu.getValue(Menu.class).getItems();
+
+                        if(items !=null && items.size()>0) {
+
+                            Iterator itemsIt = items.entrySet().iterator();
+                            ArrayList<String> child = new ArrayList<String>();
+
+                            while (itemsIt.hasNext()) {
+
+                                Map.Entry pair = (Map.Entry) itemsIt.next();
+
+                                Item itemVal = (Item) pair.getValue();
+                                itemVal.setKey((String)pair.getKey());
+
+                                child.add(itemVal.getName());
+
+
+                            }
+
+                            childItems.add(child);
+                        }
                     }
-
-//                    Log.d(TAG, "Menu: " + menu.getKey());
                 }
-//                Iterator it= map.entrySet().iterator();
-////
-//                while(it.hasNext()){
-//                    Map.Entry pair = (Map.Entry) it.next();
-//
-//                    Log.d(TAG, "Key is: " + pair.getKey());
-//                    Log.d(TAG, "Value is: " + pair.getValue());
-//                }
-
 
             }
 
@@ -98,17 +128,6 @@ public class MenuActivity extends ExpandableListActivity {
             }
         });
 
-
-    }
-
-    public void setGroupParents() {
-        parentItems.add("Android");
-        parentItems.add("Core Java");
-        parentItems.add("Desktop Java");
-        parentItems.add("Enterprise Java");
-    }
-
-    public void setChildData() {
         ArrayList<String> child = new ArrayList<String>();
         child.add("Core");
         child.add("Games");
