@@ -9,14 +9,8 @@ import java.util.HashMap;
  */
 public class Menu {
     String note;
-//    List<ItemWithKey> items;
     private HashMap<String, Item> items;
     String date;
-
-
-
-
-//    Object items;
 
 
     public String getNote() {
@@ -34,14 +28,6 @@ public class Menu {
     public void setDate(String date) {
         this.date = date;
     }
-
-//    public List<ItemWithKey> getItems() {
-//        return items;
-//    }
-//
-//    public void setItems(List<ItemWithKey> items) {
-//        this.items = items;
-//    }
 
 
     public HashMap<String, Item> getItems() {

@@ -4,11 +4,21 @@ package com.express.apps.expresscafe.models;
  * Created by fabdin on 8/2/2016.
  */
 public class Item {
+
+    String key;
     String categoryId;
     Boolean dashboard;
     String description;
     String name;
     Picture picture;
+
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
+    }
 
     public String getCategoryId() {
         return categoryId;
