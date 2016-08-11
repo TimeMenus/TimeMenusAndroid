@@ -9,11 +9,13 @@ import java.util.HashMap;
  */
 public class Menu {
     String note;
-//    List<ItemWithKey> items;
+    //    List<ItemWithKey> items;
     private HashMap<String, Item> items;
     String date;
 
+    public Menu(){
 
+    }
 
 
 //    Object items;
@@ -49,13 +51,12 @@ public class Menu {
     }
 
 
-
     public void setItems(HashMap<String, Item> items) {
         this.items = items;
     }
 
     @Override
     public String toString() {
-        return this.date+ " : "+getNote();
+        return this.date + " : " + getNote();
     }
 }

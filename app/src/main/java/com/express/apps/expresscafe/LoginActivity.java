@@ -44,6 +44,8 @@ public class LoginActivity extends BaseActivity{
                     // User is signed in
                     Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
                     msgArea.setText("Welcome "+user.getEmail());
+                    Intent i = new Intent(LoginActivity.this, AdminMainActivity.class);
+                    startActivity(i);
 
                     signOut.setVisibility(View.VISIBLE);
                     signIn.setVisibility(View.GONE);
@@ -109,7 +111,7 @@ public class LoginActivity extends BaseActivity{
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         Log.d(TAG, "signInWithEmail:onComplete:" + task.isSuccessful());
-                        Intent i = new Intent(LoginActivity.this, AdminActivity.class);
+                        Intent i = new Intent(LoginActivity.this, AdminMainActivity.class);
                         startActivity(i);
 
                         // If sign in fails, display a message to the user. If sign in succeeds

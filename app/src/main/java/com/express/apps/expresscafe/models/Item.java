@@ -10,6 +10,18 @@ public class Item {
     String name;
     Picture picture;
 
+    public Item() {
+    }
+
+
+    public Item(String categoryId, Boolean dashboard, String description, String name, Picture picture) {
+        this.categoryId = categoryId;
+        this.dashboard = dashboard;
+        this.description = description;
+        this.name = name;
+        this.picture = picture;
+    }
+
     public String getCategoryId() {
         return categoryId;
     }

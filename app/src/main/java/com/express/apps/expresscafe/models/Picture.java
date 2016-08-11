@@ -7,6 +7,15 @@ public class Picture {
     String name;
     String url;
 
+    public Picture() {
+
+    }
+
+    public Picture(String name, String url) {
+        this.name = name;
+        this.url = url;
+    }
+
     public String getName() {
         return name;
     }
