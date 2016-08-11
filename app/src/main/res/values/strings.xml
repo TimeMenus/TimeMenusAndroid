@@ -33,7 +33,11 @@
         <item>Pasta</item>
         <item>Grill</item>
     </string-array>
-    <string name="item_prompt">Pick the Item</string>
+    <string name="item_prompt">Category</string>
     <string name="item_name">Item Name:</string>
+    <string name="image_btn">Select Picture</string>
+    <string name="save_item">Save Item</string>
+    <string name="add_item">Add Item</string>
+    <string name="save_note">Save Note</string>
 
 </resources>
