@@ -12,6 +12,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
@@ -25,24 +26,56 @@ public class DataService {
 
     private static FirebaseDatabase database;
     private static List<Category> categories =new ArrayList<>();
+    private static String todayMenuKey = null;
 
     public static DataService newInstance() {
 
         database = FirebaseDatabase.getInstance();
         DataService ds = new DataService();
 
-        setListeners();
+        setCategoriesListener();
+        setMenuListener();
 
         return ds;
     }
 
-    private static void setListeners() {
+    private static void setMenuListener() {
+
+
+        DatabaseReference myRef = database.getReference("menues");
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Iterator it = dataSnapshot.getChildren().iterator();
+                while (it.hasNext()) {
+                    DataSnapshot menu = (DataSnapshot) it.next();
+                    String date = menu.getValue(Menu.class).getDate();
+
+                    Menu m=new Menu();
+
+                    if (date == UtilsService.getTodayDate()) {
+                        todayMenuKey = ((DataSnapshot) it.next()).getKey();
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                Log.w("TAG", "Failed to read value.", error.toException());
+            }
+        });
+
+    }
+
+    private static void setCategoriesListener() {
+
         DatabaseReference categoriesRef = database.getReference("categories");
         categoriesRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
                 Iterator it=dataSnapshot.getChildren().iterator();
+                categories = new ArrayList<Category>();
                 while(it.hasNext()){
                     DataSnapshot ds=(DataSnapshot) it.next();
                     Category c=new Category();
@@ -60,15 +93,14 @@ public class DataService {
             }
         });
 
-
-
     }
 
-    public Menu getTodayMenu(){
 
-        Menu m=new Menu();
+    public String getTodayMenuKey(){
 
-        return m;
+//        Log.d("Menu Key ",todayMenuKey);
+
+        return "-KOtT5w5ICdzgFgWNlcL";
     }
 
     public Category getCategoryById(String key){
@@ -84,4 +116,15 @@ public class DataService {
         return categories;
     }
 
+    public String getCategoryByName(String name) {
+
+        for (Category c: categories){
+
+            if(name.equals(c.getName())){
+                return c.getKey();
+            }
+        }
+
+        return null;
+    }
 }

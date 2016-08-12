@@ -46,6 +46,7 @@ public class MenuActivity extends ExpandableListActivity {
         expandableList.setGroupIndicator(null);
         expandableList.setClickable(true);
 
+
         dataService = DataService.newInstance();
 
 

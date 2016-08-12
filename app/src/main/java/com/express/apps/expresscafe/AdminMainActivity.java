@@ -4,11 +4,13 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 
 import com.express.apps.expresscafe.models.Menu;
+import com.express.apps.expresscafe.services.DataService;
 import com.express.apps.expresscafe.services.MenuService;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -26,8 +28,13 @@ public class AdminMainActivity extends AppCompatActivity {
     private ProgressDialog progress;
 
 
+    DataService dataService = null;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        dataService = DataService.newInstance();
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
@@ -48,7 +55,8 @@ public class AdminMainActivity extends AppCompatActivity {
 //        spinner.setVisibility(View.VISIBLE);
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("menues/-KOtT5w5ICdzgFgWNlcL");
+        Log.d("KEY",dataService.getTodayMenuKey());
+        DatabaseReference myRef = database.getReference("menues/"+dataService.getTodayMenuKey());
 //        System.out.println("MenuService.keyforTodayDate(todayDate): " +MenuService.keyforTodayDate(todayDate));
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -69,7 +77,7 @@ public class AdminMainActivity extends AppCompatActivity {
 
     public void saveNote(View view) {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("menues/-KOG_crFtM-wgOm6BKuf/note");
+        DatabaseReference myRef = database.getReference("menues/"+dataService.getTodayMenuKey()+"/note");
         myRef.setValue(note.getText().toString());
     }
 
