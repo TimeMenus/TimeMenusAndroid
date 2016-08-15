@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.EditText;
 
 import com.express.apps.expresscafe.models.Menu;
+import com.express.apps.expresscafe.services.AuthService;
 import com.express.apps.expresscafe.services.DataService;
 import com.express.apps.expresscafe.services.MenuService;
 import com.google.firebase.database.DataSnapshot;
@@ -36,8 +37,8 @@ public class AdminMainActivity extends AppCompatActivity {
 
         dataService = DataService.newInstance();
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeButtonEnabled(true);
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//        getSupportActionBar().setHomeButtonEnabled(true);
 
         progress=new ProgressDialog(this);
         progress.setMessage("Loading ...");
@@ -91,6 +92,16 @@ public class AdminMainActivity extends AppCompatActivity {
         Intent myIntent = new Intent(getApplicationContext(), MainActivity.class);
         startActivityForResult(myIntent, 0);
         return true;
+    }
+
+    public void signOutButton(View view){
+//        signOut();
+        AuthService.signOut();
+
+        Intent intent = new Intent(this, MainActivity.class);
+
+        startActivity(intent);
+
     }
 
 }
