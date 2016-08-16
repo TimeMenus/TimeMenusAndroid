@@ -29,6 +29,7 @@ import android.view.View.OnClickListener;
 
 import com.express.apps.expresscafe.models.Item;
 import com.express.apps.expresscafe.models.Picture;
+import com.express.apps.expresscafe.services.DataService;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
@@ -64,8 +65,13 @@ public class AdminActivity extends AppCompatActivity implements OnClickListener 
     private ProgressDialog progress;
 
 
+    DataService dataService = null;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        dataService =DataService.newInstance();
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
@@ -153,10 +159,13 @@ public class AdminActivity extends AppCompatActivity implements OnClickListener 
                 downloadUrl = taskSnapshot.getDownloadUrl();
                 Picture pic = new Picture(picName, downloadUrl.toString());
 
-                Item item = new Item("-KMy-TrOornKuDEgcJjB", dashboardSel, itemDescStr, itemNameStr, pic);
+                String categoryID=dataService.getCategoryByName(menuItemSelStr);
+                //"-KMy-TrOornKuDEgcJjB"
+
+                Item item = new Item(categoryID, dashboardSel, itemDescStr, itemNameStr, pic);
 
                 FirebaseDatabase database = FirebaseDatabase.getInstance();
-                DatabaseReference myRef = database.getReference("menues/-KOG_crFtM-wgOm6BKuf/items");
+                DatabaseReference myRef = database.getReference("menues/"+dataService.getTodayMenuKey()+"/items");
                 myRef.push().setValue(item);
                 finish();
                 startActivity(getIntent());

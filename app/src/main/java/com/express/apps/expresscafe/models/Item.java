@@ -15,8 +15,8 @@ public class Item {
     public Item() {
     }
 
-    public Item(String key, Boolean dashboard, String description, String name, Picture pic) {
-        this.key=key;
+    public Item(String categoryId, Boolean dashboard, String description, String name, Picture pic) {
+        this.categoryId=categoryId;
         this.dashboard=dashboard;
         this.description=description;
         this.name=name;
