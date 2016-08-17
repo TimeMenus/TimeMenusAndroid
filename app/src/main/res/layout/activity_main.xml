@@ -21,21 +21,42 @@
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
 
 
-    <TextView
+    <ScrollView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/wellness_now_desc"
-        android:id="@+id/textView2"
-        android:layout_marginTop="120dp"
-        android:layout_alignParentStart="true" />
+        android:id="@+id/scrollView"
+        android:layout_alignParentStart="true" >
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/imageView"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="70dp" />
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerHorizontal="true">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/imageView"
+                android:layout_marginTop="70dp"
+                android:contentDescription="@string/wellnessnow"
+                android:textAlignment="center"
+                android:layout_gravity="center_horizontal" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/wellness_now_desc"
+                android:id="@+id/wellness_description"
+                android:layout_marginTop="120dp"
+                android:layout_alignParentStart="true" />
+
+
+
+        </LinearLayout>
+
+    </ScrollView>
+
+
 
 
 </RelativeLayout>
