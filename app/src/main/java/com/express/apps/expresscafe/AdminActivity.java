@@ -1,6 +1,5 @@
 package com.express.apps.expresscafe;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
@@ -20,7 +19,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
@@ -30,6 +28,7 @@ import android.view.View.OnClickListener;
 import com.express.apps.expresscafe.models.Item;
 import com.express.apps.expresscafe.models.Picture;
 import com.express.apps.expresscafe.services.DataService;
+import com.express.apps.expresscafe.services.UtilsService;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
@@ -41,18 +40,10 @@ import com.google.firebase.storage.UploadTask;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.Locale;
 
 public class AdminActivity extends AppCompatActivity implements OnClickListener {
 
-    private TextView dateView;
-    private DatePickerDialog datePickerDialog;
-    private SimpleDateFormat dateFormatter;
-    private EditText itemName, itemDesc;
-    private Spinner menuItem;
-    private CheckBox dashboardChk;
     ImageView viewImage;
     Uri downloadUrl;
     String picName;
@@ -61,20 +52,21 @@ public class AdminActivity extends AppCompatActivity implements OnClickListener 
     String dateStr;
     String menuItemSelStr;
     Boolean dashboardSel;
+    DataService dataService = null;
+    private TextView dateView;
+    private DatePickerDialog datePickerDialog;
+    private SimpleDateFormat dateFormatter;
+    private EditText itemName, itemDesc;
+    private Spinner menuItem;
+    private CheckBox dashboardChk;
     private Uri fileUri;
     private ProgressDialog progress;
-
-
-    DataService dataService = null;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         dataService =DataService.newInstance();
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeButtonEnabled(true);
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin);
@@ -91,24 +83,9 @@ public class AdminActivity extends AppCompatActivity implements OnClickListener 
 
 //        For the calendar and date
         dateFormatter = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
-//        dateView = (TextView) findViewById(R.id.picked_date);
         viewImage = (ImageView) findViewById(R.id.viewImage);
-//        setDateTimeField();
     }
 
-//    private void setDateTimeField() {
-//        dateView.setOnClickListener(this);
-//        Calendar newCalendar = Calendar.getInstance();
-//        datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
-//
-//            @Override
-//            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-//                Calendar newDate = Calendar.getInstance();
-//                newDate.set(year, monthOfYear, dayOfMonth);
-//                dateView.setText(dateFormatter.format(newDate.getTime()));
-//            }
-//        }, newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
-//    }
 
     @Override
     public void onClick(View view) {
@@ -133,13 +110,11 @@ public class AdminActivity extends AppCompatActivity implements OnClickListener 
 
         itemNameStr = itemName.getText().toString();
         itemDescStr = itemDesc.getText().toString();
-//        dateStr = dateView.getText().toString();
+
         menuItemSelStr = menuItem.getSelectedItem().toString();
         dashboardSel = dashboardChk.isChecked();
 
-//        File objFile = new File(String.valueOf(fileUri));
-//        picName = objFile.getName();
-        picName = generateName();
+        picName = UtilsService.generateName();
 
         FirebaseStorage storage = FirebaseStorage.getInstance();
         StorageReference storageRef = storage.getReference("images/" + picName);
@@ -160,7 +135,6 @@ public class AdminActivity extends AppCompatActivity implements OnClickListener 
                 Picture pic = new Picture(picName, downloadUrl.toString());
 
                 String categoryID=dataService.getCategoryByName(menuItemSelStr);
-                //"-KMy-TrOornKuDEgcJjB"
 
                 Item item = new Item(categoryID, dashboardSel, itemDescStr, itemNameStr, pic);
 
@@ -252,7 +226,7 @@ public class AdminActivity extends AppCompatActivity implements OnClickListener 
 
         File mediaFile;
         if (type == 1) {
-            mediaFile = new File(mediaStorageDir.getPath() + File.separator + generateName());
+            mediaFile = new File(mediaStorageDir.getPath() + File.separator + UtilsService.generateName());
         } else {
             return null;
         }
@@ -260,12 +234,7 @@ public class AdminActivity extends AppCompatActivity implements OnClickListener 
         return mediaFile;
     }
 
-    private String generateName() {
-        /**Create a media file name*/
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-        String picName = "IMG_" + timeStamp + ".jpg";
-        return picName;
-    }
+
 
     //for back buttonm on top of the screen
     public boolean onOptionsItemSelected(MenuItem item){

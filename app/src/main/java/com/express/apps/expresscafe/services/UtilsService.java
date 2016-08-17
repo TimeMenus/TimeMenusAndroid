@@ -31,4 +31,11 @@ public class UtilsService {
         }
     }
 
+    public static String generateName() {
+        /**Create a media file name*/
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String picName = "IMG_" + timeStamp + ".jpg";
+        return picName;
+    }
+
 }

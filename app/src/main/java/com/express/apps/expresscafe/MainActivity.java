@@ -30,11 +30,11 @@ public class MainActivity extends AppCompatActivity {
         authService = AuthService.newInstance();
 
         setContentView(R.layout.activity_main);
+
         ImageView imageView = (ImageView) findViewById(R.id.imageView);
         imageView.setImageResource(R.drawable.welness_web);
 
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
-
         setSupportActionBar(myToolbar);
 
     }
