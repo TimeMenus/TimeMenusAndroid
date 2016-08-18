@@ -139,7 +139,7 @@ public class AddItemActivity extends AppCompatActivity implements OnClickListene
                 Item item = new Item(categoryID, dashboardSel, itemDescStr, itemNameStr, pic);
 
                 FirebaseDatabase database = FirebaseDatabase.getInstance();
-                DatabaseReference myRef = database.getReference("menues/"+dataService.getTodayMenuKey()+"/items");
+                DatabaseReference myRef = database.getReference("menues/"+dataService.getTodayMenu().getKey()+"/items");
                 myRef.push().setValue(item);
                 finish();
                 startActivity(getIntent());

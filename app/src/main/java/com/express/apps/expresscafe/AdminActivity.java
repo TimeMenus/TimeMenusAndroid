@@ -57,8 +57,8 @@ public class AdminActivity extends AppCompatActivity {
 //        spinner.setVisibility(View.VISIBLE);
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        Log.d("KEY",dataService.getTodayMenuKey());
-        DatabaseReference myRef = database.getReference("menues/"+dataService.getTodayMenuKey());
+
+        DatabaseReference myRef = database.getReference("menues/"+dataService.getTodayMenu().getKey());
 //        System.out.println("MenuService.keyforTodayDate(todayDate): " +MenuService.keyforTodayDate(todayDate));
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -79,7 +79,7 @@ public class AdminActivity extends AppCompatActivity {
 
     public void saveNote(View view) {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("menues/"+dataService.getTodayMenuKey()+"/note");
+        DatabaseReference myRef = database.getReference("menues/"+dataService.getTodayMenu().getKey()+"/note");
         myRef.setValue(note.getText().toString());
     }
 

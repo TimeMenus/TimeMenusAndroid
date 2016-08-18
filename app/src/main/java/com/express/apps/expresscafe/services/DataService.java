@@ -16,9 +16,11 @@ import com.google.firebase.database.ValueEventListener;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.Map;
 
 /**
  * Created by fabdin on 8/3/2016.
@@ -26,7 +28,8 @@ import java.util.ListIterator;
 public class DataService {
 
     private static FirebaseDatabase database;
-    private static List<Category> categories =new ArrayList<>();
+    private static List<Category> categories = new ArrayList<>();
+    private static List<Item> items = new ArrayList<>();
     private static Menu todayMenu = null;
 
     public static DataService newInstance() {
@@ -36,30 +39,33 @@ public class DataService {
 
         setCategoriesListener();
         setMenuListener();
+//        Log.d("Item",DataService.getTodayMenu().getDate());
+//        setItemsListener();
 
         return ds;
     }
 
-
     //Listeners
-
     private static void setMenuListener() {
-
-
         DatabaseReference myRef = database.getReference("menues");
         myRef.addValueEventListener(new ValueEventListener() {
+
+
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+
                 Iterator it = dataSnapshot.getChildren().iterator();
                 while (it.hasNext()) {
                     DataSnapshot menu = (DataSnapshot) it.next();
+//                    System.out.print("Item : "+menu.getKey());
+
 
                     Menu menuObject=(menu.getValue(Menu.class));
+                    menuObject.setKey(menu.getKey());
 
-                    if (menuObject.getDate() == UtilsService.getTodayDate()) {
+                    if (menuObject.getDate().equals(UtilsService.getTodayDate())) {
+                        Log.d("Item",menuObject.getKey()+" "+menuObject.getDate());
                         todayMenu = menuObject;
-                        todayMenu.setKey(((DataSnapshot) it.next()).getKey());
-
                     }
                 }
             }
@@ -100,15 +106,72 @@ public class DataService {
 
     }
 
+    public static void setItemsListener(){
+
+        if(todayMenu==null){
+            Log.d("Item","IS NULL");
+        }
+
+
+        if(todayMenu!=null){
+
+            DatabaseReference itemsRef = database.getReference("menues/"+todayMenu.getKey()+"/items");
+            itemsRef.addValueEventListener(new ValueEventListener() {
+
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+
+                    HashMap<String,Item> itemsHashMap =  dataSnapshot.getValue(HashMap.class);
+
+                    Iterator it= itemsHashMap.entrySet().iterator();
+
+                    items=Collections.EMPTY_LIST;
+
+                    while(it.hasNext()){
+                        Map.Entry pair = (Map.Entry) it.next();
+                        String key=(String)pair.getKey();
+                        Item item = (Item) pair.getValue();
+                        item.setKey(key);
+                        items.add(item);
+                        System.out.println(item.getName());
+                    }
+
+
+
+//                    Iterator it=dataSnapshot.getChildren().iterator();
+//
+//                    while(it.hasNext()) {
+//
+//
+//                        DataSnapshot ds = (DataSnapshot) it.next();
+//                        Log.d("Item",(String)ds.getValue());
+//
+//                        Item item = (Item) ds.getValue();
+//
+//                    }
+
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+        }
+
+    }
+
     public static Menu getTodayMenu(){
+
+
 
         return todayMenu;
     }
 
-
     //Items
-
     public List<Item> getItemsForCategory(String categoryId){
+
+
 
         return Collections.emptyList();
 
@@ -126,12 +189,10 @@ public class DataService {
 
     }
 
-
     public static List<Category> getCategories(String key){
 
         return categories;
     }
-
 
     public String getCategoryByName(String name) {
 

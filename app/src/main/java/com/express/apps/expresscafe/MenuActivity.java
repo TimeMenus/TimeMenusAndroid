@@ -10,6 +10,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.express.apps.expresscafe.models.Category;
+import com.express.apps.expresscafe.models.Menu;
 import com.express.apps.expresscafe.services.DataService;
 
 import java.util.ArrayList;
@@ -29,6 +30,14 @@ public class MenuActivity extends ListActivity{
         for(Category c: categoryList){
             list.add(c.getName());
         }
+
+        Menu todayMenu=DataService.getTodayMenu();
+
+        DataService.setItemsListener();
+
+        System.out.print("Item: "+todayMenu.getKey()+" "+todayMenu.getDate());
+
+
 
 
         setListAdapter(new ArrayAdapter<String>(this, R.layout.categories_list,list));
