@@ -37,7 +37,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/imageView"
-                android:layout_marginTop="70dp"
+                android:layout_marginTop="90dp"
                 android:contentDescription="@string/wellnessnow"
                 android:textAlignment="center"
                 android:layout_gravity="center_horizontal" />
@@ -48,16 +48,9 @@
                 android:layout_height="wrap_content"
                 android:text="@string/wellness_now_desc"
                 android:id="@+id/wellness_description"
-                android:layout_marginTop="120dp"
+                android:layout_marginTop="50dp"
                 android:layout_alignParentStart="true" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/wellness_now_desc"
-                android:id="@+id/wellness_description2"
-                android:layout_marginTop="120dp"
-                android:layout_alignParentStart="true" />
 
 
 
@@ -65,7 +58,23 @@
 
     </ScrollView>
 
+    <Button
 
+        android:text="Today&apos;s Menu"
+        android:id="@+id/button"
+        android:layout_below="@+id/scrollView"
+        android:textColor="#FFFFFF"
+        android:textSize="30sp"
+        android:layout_width="270dp"
+        android:layout_height="60dp"
+        android:shadowColor="#A8A8A8"
+        android:shadowDx="0"
+        android:shadowDy="0"
+        android:shadowRadius="5"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"
+
+        />
 
 
 </RelativeLayout>
