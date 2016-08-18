@@ -13,7 +13,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -42,34 +42,35 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
 
-public class AddItemActivity extends AppCompatActivity implements OnClickListener {
+public class AddItemActivity extends BaseActivity {
 
     ImageView viewImage;
     Uri downloadUrl;
     String picName;
     String itemNameStr;
     String itemDescStr;
-    String dateStr;
     String menuItemSelStr;
     Boolean dashboardSel;
     DataService dataService = null;
-    private TextView dateView;
-    private DatePickerDialog datePickerDialog;
-    private SimpleDateFormat dateFormatter;
     private EditText itemName, itemDesc;
     private Spinner menuItem;
     private CheckBox dashboardChk;
     private Uri fileUri;
-    private ProgressDialog progress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        dataService =DataService.newInstance();
+        Toolbar toolbar = (Toolbar) findViewById(R.id.my_toolbar_additem);
+        setSupportActionBar(toolbar);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
+
+        dataService = DataService.newInstance();
 
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_admin);
+        setContentView(R.layout.activity_additem);
 
         //for menu drop down item
         Spinner countryView = (Spinner) findViewById(R.id.menuitems);
@@ -81,26 +82,13 @@ public class AddItemActivity extends AppCompatActivity implements OnClickListene
         adapter.setDropDownViewResource(R.layout.spinner_textview_align);
         countryView.setAdapter(adapter);
 
-//        For the calendar and date
-        dateFormatter = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
         viewImage = (ImageView) findViewById(R.id.viewImage);
     }
 
 
-    @Override
-    public void onClick(View view) {
-        if (view == dateView) {
-            datePickerDialog.show();
-        }
-    }
-
     public void saveItem(View view) {
 
-        progress=new ProgressDialog(this);
-        progress.setMessage("Please Wait!!! Loading ...");
-        progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        progress.setIndeterminate(false);
-        progress.show();
+        showProgressDialog();
 
         itemName = (EditText) findViewById(R.id.item_name);
         itemDesc = (EditText) findViewById(R.id.item_desc);
@@ -134,16 +122,16 @@ public class AddItemActivity extends AppCompatActivity implements OnClickListene
                 downloadUrl = taskSnapshot.getDownloadUrl();
                 Picture pic = new Picture(picName, downloadUrl.toString());
 
-                String categoryID=dataService.getCategoryByName(menuItemSelStr);
+                String categoryID = dataService.getCategoryByName(menuItemSelStr);
 
                 Item item = new Item(categoryID, dashboardSel, itemDescStr, itemNameStr, pic);
 
                 FirebaseDatabase database = FirebaseDatabase.getInstance();
-                DatabaseReference myRef = database.getReference("menues/"+dataService.getTodayMenu().getKey()+"/items");
+                DatabaseReference myRef = database.getReference("menues/" + dataService.getTodayMenu().getKey() + "/items");
                 myRef.push().setValue(item);
                 finish();
                 startActivity(getIntent());
-                progress.dismiss();
+                hideProgressDialog();
             }
         });
 
@@ -234,10 +222,8 @@ public class AddItemActivity extends AppCompatActivity implements OnClickListene
         return mediaFile;
     }
 
-
-
     //for back buttonm on top of the screen
-    public boolean onOptionsItemSelected(MenuItem item){
+    public boolean onOptionsItemSelected(MenuItem item) {
         Intent myIntent = new Intent(getApplicationContext(), AdminActivity.class);
         startActivityForResult(myIntent, 0);
         return true;
