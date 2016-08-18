@@ -1,5 +1,6 @@
 package com.express.apps.expresscafe;
 
+import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.Button;
 
 import com.express.apps.expresscafe.services.AuthService;
+import com.express.apps.expresscafe.services.DataService;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -19,6 +21,7 @@ public class DashboardActivity extends AppCompatActivity {
 
     Button button;
     AuthService authService;
+    DataService dataService;
 
 
 
@@ -36,18 +39,7 @@ public class DashboardActivity extends AppCompatActivity {
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
 
-//        setListAdapter(new ArrayAdapter<String>(this, R.layout.dashboard_item,FRUITS));
-//        ListView listView = getListView();
-//        listView.setTextFilterEnabled(true);
-//
-//        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            public void onItemClick(AdapterView<?> parent, View view,
-//                                    int position, long id) {
-//                // When clicked, show a toast with the TextView text
-//                Toast.makeText(getApplicationContext(),
-//                        ((TextView) view).getText(), Toast.LENGTH_SHORT).show();
-//            }
-//        });
+        dataService = DataService.newInstance();
 
     }
 
@@ -120,6 +112,7 @@ public class DashboardActivity extends AppCompatActivity {
     public void openAdminLoginPage(View view){
 
     }
+
 
 
 

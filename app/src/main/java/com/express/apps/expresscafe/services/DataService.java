@@ -5,6 +5,7 @@ import android.provider.ContactsContract;
 import android.util.Log;
 
 import com.express.apps.expresscafe.models.Category;
+import com.express.apps.expresscafe.models.Item;
 import com.express.apps.expresscafe.models.Menu;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -26,7 +27,7 @@ public class DataService {
 
     private static FirebaseDatabase database;
     private static List<Category> categories =new ArrayList<>();
-    private static String todayMenuKey = null;
+    private static Menu todayMenu = null;
 
     public static DataService newInstance() {
 
@@ -39,6 +40,9 @@ public class DataService {
         return ds;
     }
 
+
+    //Listeners
+
     private static void setMenuListener() {
 
 
@@ -49,12 +53,13 @@ public class DataService {
                 Iterator it = dataSnapshot.getChildren().iterator();
                 while (it.hasNext()) {
                     DataSnapshot menu = (DataSnapshot) it.next();
-                    String date = menu.getValue(Menu.class).getDate();
 
-                    Menu m=new Menu();
+                    Menu menuObject=(menu.getValue(Menu.class));
 
-                    if (date == UtilsService.getTodayDate()) {
-                        todayMenuKey = ((DataSnapshot) it.next()).getKey();
+                    if (menuObject.getDate() == UtilsService.getTodayDate()) {
+                        todayMenu = menuObject;
+                        todayMenu.setKey(((DataSnapshot) it.next()).getKey());
+
                     }
                 }
             }
@@ -95,14 +100,25 @@ public class DataService {
 
     }
 
+    public static Menu getTodayMenu(){
 
-    public String getTodayMenuKey(){
-
-//        Log.d("Menu Key ",todayMenuKey);
-
-        return "-KOtT5w5ICdzgFgWNlcL";
+        return todayMenu;
     }
 
+
+    //Items
+
+    public List<Item> getItemsForCategory(String categoryId){
+
+        return Collections.emptyList();
+
+    }
+
+    public Item getDashboardItemForCategory(String categoryId){
+        return null;
+    }
+
+    //Categories
     public Category getCategoryById(String key){
 
 
@@ -111,10 +127,11 @@ public class DataService {
     }
 
 
-    public List<Category> getCategories(String key){
+    public static List<Category> getCategories(String key){
 
         return categories;
     }
+
 
     public String getCategoryByName(String name) {
 
