@@ -2,7 +2,6 @@ package com.express.apps.expresscafe;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -51,7 +50,7 @@ public class LoginActivity extends BaseActivity {
                     // User is signed in
                     Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
                     msgArea.setText("Welcome " + user.getEmail());
-                    Intent i = new Intent(LoginActivity.this, AdminMainActivity.class);
+                    Intent i = new Intent(LoginActivity.this, AdminActivity.class);
                     startActivity(i);
 
                     signOut.setVisibility(View.VISIBLE);
@@ -96,7 +95,7 @@ public class LoginActivity extends BaseActivity {
         signOut();
 
 
-        Intent intent = new Intent(this, MainActivity.class);
+        Intent intent = new Intent(this, DashboardActivity.class);
 
         startActivity(intent);
 
@@ -135,7 +134,7 @@ public class LoginActivity extends BaseActivity {
 
 
                         }else {
-                            Intent i = new Intent(LoginActivity.this, AdminMainActivity.class);
+                            Intent i = new Intent(LoginActivity.this, AdminActivity.class);
                             startActivity(i);
                         }
 

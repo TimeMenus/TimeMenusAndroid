@@ -1,11 +1,9 @@
 package com.express.apps.expresscafe;
 
-import android.media.Image;
 import android.support.v7.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,10 +15,14 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 
-public class MainActivity extends AppCompatActivity {
+public class DashboardActivity extends AppCompatActivity {
 
     Button button;
     AuthService authService;
+    static final String[] FRUITS = new String[] { "Apple", "Avocado", "Banana",
+            "Blueberry", "Coconut", "Durian", "Guava", "Kiwifruit",
+            "Jackfruit", "Mango", "Olive", "Pear", "Sugar-apple" };
+
 
 
     @Override
@@ -36,6 +38,19 @@ public class MainActivity extends AppCompatActivity {
 
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
+
+//        setListAdapter(new ArrayAdapter<String>(this, R.layout.dashboard_item,FRUITS));
+//        ListView listView = getListView();
+//        listView.setTextFilterEnabled(true);
+//
+//        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            public void onItemClick(AdapterView<?> parent, View view,
+//                                    int position, long id) {
+//                // When clicked, show a toast with the TextView text
+//                Toast.makeText(getApplicationContext(),
+//                        ((TextView) view).getText(), Toast.LENGTH_SHORT).show();
+//            }
+//        });
 
     }
 
@@ -89,7 +104,7 @@ public class MainActivity extends AppCompatActivity {
         if(item.getTitle().equals("Logout")){
             AuthService.signOut();
 
-            Intent intent = new Intent(this,MainActivity.class);
+            Intent intent = new Intent(this,DashboardActivity.class);
             startActivity(intent);
         }
 
