@@ -115,26 +115,44 @@ public class DataService {
 
         if(todayMenu!=null){
 
-            DatabaseReference itemsRef = database.getReference("menues/"+todayMenu.getKey()+"/items");
+            DatabaseReference itemsRef = database.getReference("menues/"+todayMenu.getKey());
             itemsRef.addValueEventListener(new ValueEventListener() {
 
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
 
-                    HashMap<String,Item> itemsHashMap =  dataSnapshot.getValue(HashMap.class);
+                    DataSnapshot menu=(DataSnapshot) dataSnapshot;
 
-                    Iterator it= itemsHashMap.entrySet().iterator();
+                    Iterator itemsItertr = menu.getValue(Menu.class).getItems().entrySet().iterator();
 
-                    items=Collections.EMPTY_LIST;
+                    while (itemsItertr.hasNext()){
+                        Map.Entry pair = (Map.Entry)itemsItertr.next();
 
-                    while(it.hasNext()){
-                        Map.Entry pair = (Map.Entry) it.next();
-                        String key=(String)pair.getKey();
-                        Item item = (Item) pair.getValue();
-                        item.setKey(key);
+                        Item item = (Item)pair.getValue();
+                        item.setKey((String)pair.getKey());
                         items.add(item);
-                        System.out.println(item.getName());
+
+                        System.out.println(item.getKey() + " : CategoryID: " + item.getCategoryId() + " Name: " + item.getName());
+
                     }
+
+
+//                   DataSnapshot itemsHashMap =  dataSnapshot.getChildren();
+
+//                    Iterator it= dataSnapshot.getChildren().iterator();
+//
+//
+//                    while(it.hasNext()){
+//
+//                        DataSnapshot ds=(DataSnapshot)it.next();
+//
+//                        Item item=new Item();
+//                        item=(Item)ds.getValue();
+//                        item.setKey(ds.getKey());
+//
+//                        items.add(item);
+//                        System.out.println(item.getKey());
+//                    }
 
 
 

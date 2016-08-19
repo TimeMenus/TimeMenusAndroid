@@ -35,7 +35,7 @@ public class MenuActivity extends ListActivity{
 
         DataService.setItemsListener();
 
-        System.out.print("Item: "+todayMenu.getKey()+" "+todayMenu.getDate());
+//        System.out.print("Item: "+todayMenu.getKey()+" "+todayMenu.getDate());
 
 
 
