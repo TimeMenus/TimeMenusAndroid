@@ -1,6 +1,5 @@
 package com.express.apps.expresscafe;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -25,12 +24,6 @@ public class AdminActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
-        Toolbar toolbar = (Toolbar) findViewById(R.id.my_toolbar_admin);
-        setSupportActionBar(toolbar);
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        }
 
         dataService = DataService.newInstance();
 
@@ -60,6 +53,13 @@ public class AdminActivity extends BaseActivity {
                 System.out.println("The read failed: " + databaseError.getMessage());
             }
         });
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.my_toolbar_admin);
+        setSupportActionBar(toolbar);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setHomeButtonEnabled(true);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
 
     }
 
