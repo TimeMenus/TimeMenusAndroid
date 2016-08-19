@@ -5,6 +5,7 @@ import android.provider.ContactsContract;
 import android.util.Log;
 
 import com.express.apps.expresscafe.models.Category;
+import com.express.apps.expresscafe.models.Item;
 import com.express.apps.expresscafe.models.Menu;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -15,9 +16,11 @@ import com.google.firebase.database.ValueEventListener;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.Map;
 
 /**
  * Created by fabdin on 8/3/2016.
@@ -25,8 +28,9 @@ import java.util.ListIterator;
 public class DataService {
 
     private static FirebaseDatabase database;
-    private static List<Category> categories =new ArrayList<>();
-    private static String todayMenuKey = null;
+    private static List<Category> categories = new ArrayList<>();
+    private static List<Item> items = new ArrayList<>();
+    private static Menu todayMenu = null;
 
     public static DataService newInstance() {
 
@@ -35,26 +39,33 @@ public class DataService {
 
         setCategoriesListener();
         setMenuListener();
+//        Log.d("Item",DataService.getTodayMenu().getDate());
+//        setItemsListener();
 
         return ds;
     }
 
+    //Listeners
     private static void setMenuListener() {
-
-
         DatabaseReference myRef = database.getReference("menues");
         myRef.addValueEventListener(new ValueEventListener() {
+
+
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+
                 Iterator it = dataSnapshot.getChildren().iterator();
                 while (it.hasNext()) {
                     DataSnapshot menu = (DataSnapshot) it.next();
-                    String date = menu.getValue(Menu.class).getDate();
+//                    System.out.print("Item : "+menu.getKey());
 
-                    Menu m=new Menu();
 
-                    if (date == UtilsService.getTodayDate()) {
-                        todayMenuKey = ((DataSnapshot) it.next()).getKey();
+                    Menu menuObject=(menu.getValue(Menu.class));
+                    menuObject.setKey(menu.getKey());
+
+                    if (menuObject.getDate().equals(UtilsService.getTodayDate())) {
+                        Log.d("Item",menuObject.getKey()+" "+menuObject.getDate());
+                        todayMenu = menuObject;
                     }
                 }
             }
@@ -95,14 +106,100 @@ public class DataService {
 
     }
 
+    public static void setItemsListener(){
 
-    public String getTodayMenuKey(){
+        if(todayMenu==null){
+            Log.d("Item","IS NULL");
+        }
 
-//        Log.d("Menu Key ",todayMenuKey);
 
-        return "-KOtT5w5ICdzgFgWNlcL";
+        if(todayMenu!=null){
+
+            DatabaseReference itemsRef = database.getReference("menues/"+todayMenu.getKey());
+            itemsRef.addValueEventListener(new ValueEventListener() {
+
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+
+                    DataSnapshot menu=(DataSnapshot) dataSnapshot;
+
+                    Iterator itemsItertr = menu.getValue(Menu.class).getItems().entrySet().iterator();
+
+                    while (itemsItertr.hasNext()){
+                        Map.Entry pair = (Map.Entry)itemsItertr.next();
+
+                        Item item = (Item)pair.getValue();
+                        item.setKey((String)pair.getKey());
+                        items.add(item);
+
+                        System.out.println(item.getKey() + " : CategoryID: " + item.getCategoryId() + " Name: " + item.getName());
+
+                    }
+
+
+//                   DataSnapshot itemsHashMap =  dataSnapshot.getChildren();
+
+//                    Iterator it= dataSnapshot.getChildren().iterator();
+//
+//
+//                    while(it.hasNext()){
+//
+//                        DataSnapshot ds=(DataSnapshot)it.next();
+//
+//                        Item item=new Item();
+//                        item=(Item)ds.getValue();
+//                        item.setKey(ds.getKey());
+//
+//                        items.add(item);
+//                        System.out.println(item.getKey());
+//                    }
+
+
+
+//                    Iterator it=dataSnapshot.getChildren().iterator();
+//
+//                    while(it.hasNext()) {
+//
+//
+//                        DataSnapshot ds = (DataSnapshot) it.next();
+//                        Log.d("Item",(String)ds.getValue());
+//
+//                        Item item = (Item) ds.getValue();
+//
+//                    }
+
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+        }
+
     }
 
+    public static Menu getTodayMenu(){
+
+
+
+        return todayMenu;
+    }
+
+    //Items
+    public List<Item> getItemsForCategory(String categoryId){
+
+
+
+        return Collections.emptyList();
+
+    }
+
+    public Item getDashboardItemForCategory(String categoryId){
+        return null;
+    }
+
+    //Categories
     public Category getCategoryById(String key){
 
 
@@ -110,8 +207,7 @@ public class DataService {
 
     }
 
-
-    public List<Category> getCategories(String key){
+    public static List<Category> getCategories(String key){
 
         return categories;
     }

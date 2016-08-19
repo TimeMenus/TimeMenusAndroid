@@ -1,6 +1,6 @@
 package com.express.apps.expresscafe;
 
-import android.media.Image;
+import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,14 +13,17 @@ import android.widget.ImageView;
 import android.widget.Button;
 
 import com.express.apps.expresscafe.services.AuthService;
+import com.express.apps.expresscafe.services.DataService;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 
-public class MainActivity extends AppCompatActivity {
+public class DashboardActivity extends AppCompatActivity {
 
     Button button;
     AuthService authService;
+    DataService dataService;
+
 
 
     @Override
@@ -36,6 +39,11 @@ public class MainActivity extends AppCompatActivity {
 
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
+
+        dataService = DataService.newInstance();
+
+
+//        System.out.print("Item: "+todayMenu.getKey()+" "+todayMenu.getDate());
 
     }
 
@@ -89,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
         if(item.getTitle().equals("Logout")){
             AuthService.signOut();
 
-            Intent intent = new Intent(this,MainActivity.class);
+            Intent intent = new Intent(this,DashboardActivity.class);
             startActivity(intent);
         }
 
@@ -108,6 +116,7 @@ public class MainActivity extends AppCompatActivity {
     public void openAdminLoginPage(View view){
 
     }
+
 
 
 

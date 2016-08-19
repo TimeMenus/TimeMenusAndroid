@@ -8,6 +8,8 @@ import java.util.HashMap;
  * Created by fabdin on 8/2/2016.
  */
 public class Menu {
+
+    String key;
     String note;
     private HashMap<String, Item> items;
     String date;
@@ -34,7 +36,13 @@ public class Menu {
         return items;
     }
 
+    public String getKey() {
+        return key;
+    }
 
+    public void setKey(String key) {
+        this.key = key;
+    }
 
     public void setItems(HashMap<String, Item> items) {
         this.items = items;
