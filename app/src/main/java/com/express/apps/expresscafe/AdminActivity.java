@@ -19,13 +19,11 @@ import com.google.firebase.database.ValueEventListener;
 public class AdminActivity extends BaseActivity {
 
     private EditText note;
-    private String todayNote;
-    DataService dataService = null;
+//    private String todayNote;
+    Menu menu=null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
-        dataService = DataService.newInstance();
 
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
@@ -35,25 +33,30 @@ public class AdminActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin);
         note = (EditText) findViewById(R.id.edit_note);
+//
+//        FirebaseDatabase database = FirebaseDatabase.getInstance();
 
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        menu = DataService.getTodayMenu();
 
-        DatabaseReference myRef = database.getReference("menues/" + dataService.getTodayMenu().getKey());
-//        System.out.println("MenuService.keyforTodayDate(todayDate): " +MenuService.keyforTodayDate(todayDate));
-        myRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                todayNote = dataSnapshot.getValue(Menu.class).getNote();
-                note.setText(todayNote);
-                hideProgressDialog();
-            }
+        note.setText(menu.getNote());
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                System.out.println("The read failed: " + databaseError.getMessage());
-            }
-        });
-
+//        if(menu!=null) {
+//            DatabaseReference myRef = database.getReference("menues/" + menu.getKey());
+//
+//            myRef.addValueEventListener(new ValueEventListener() {
+//                @Override
+//                public void onDataChange(DataSnapshot dataSnapshot) {
+//                    todayNote = dataSnapshot.getValue(Menu.class).getNote();
+//                    note.setText(todayNote);
+//                    hideProgressDialog();
+//                }
+//
+//                @Override
+//                public void onCancelled(DatabaseError databaseError) {
+//                    System.out.println("The read failed: " + databaseError.getMessage());
+//                }
+//            });
+//        }
         Toolbar toolbar = (Toolbar) findViewById(R.id.my_toolbar_admin);
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
@@ -61,11 +64,13 @@ public class AdminActivity extends BaseActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
+        hideProgressDialog();
+
     }
 
     public void saveNote(View view) {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("menues/" + dataService.getTodayMenu().getKey() + "/note");
+        DatabaseReference myRef = database.getReference("menues/" + menu.getKey() + "/note");
         myRef.setValue(note.getText().toString());
     }
 
