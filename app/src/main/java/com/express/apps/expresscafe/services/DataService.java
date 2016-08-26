@@ -31,6 +31,7 @@ public class DataService {
     private static List<Category> categories = new ArrayList<>();
     private static List<Item> items = new ArrayList<>();
     private static Menu todayMenu = null;
+    private static String todayMenuNote = null;
 
     public static DataService newInstance() {
 
@@ -66,6 +67,7 @@ public class DataService {
                     if (menuObject.getDate().equals(UtilsService.getTodayDate())) {
                         Log.d("Item",menuObject.getKey()+" "+menuObject.getDate());
                         todayMenu = menuObject;
+                        todayMenuNote = todayMenu.getNote();
                     }
                 }
             }
@@ -123,20 +125,24 @@ public class DataService {
 
                     DataSnapshot menu=(DataSnapshot) dataSnapshot;
 
-                    Iterator itemsItertr = menu.getValue(Menu.class).getItems().entrySet().iterator();
+                    Menu todayMenu=menu.getValue(Menu.class);
 
-                    while (itemsItertr.hasNext()){
-                        Map.Entry pair = (Map.Entry)itemsItertr.next();
+                    if(todayMenu.getItems() !=null) {
 
-                        Item item = (Item)pair.getValue();
-                        item.setKey((String)pair.getKey());
-                        items.add(item);
+                        Iterator itemsItertr = todayMenu.getItems().entrySet().iterator();
 
-                        System.out.println(item.getKey() + " : CategoryID: " + item.getCategoryId() + " Name: " + item.getName());
+                        while (itemsItertr.hasNext()) {
+                            Map.Entry pair = (Map.Entry) itemsItertr.next();
+
+                            Item item = (Item) pair.getValue();
+                            item.setKey((String) pair.getKey());
+                            items.add(item);
+
+                            System.out.println(item.getKey() + " : CategoryID: " + item.getCategoryId() + " Name: " + item.getName());
+
+                        }
 
                     }
-
-
 //                   DataSnapshot itemsHashMap =  dataSnapshot.getChildren();
 
 //                    Iterator it= dataSnapshot.getChildren().iterator();
@@ -186,6 +192,10 @@ public class DataService {
         return todayMenu;
     }
 
+    public static String getTodayMenuNote(){
+        return todayMenuNote;
+    }
+
     //Items
     public List<Item> getItemsForCategory(String categoryId){
 
@@ -212,7 +222,7 @@ public class DataService {
         return categories;
     }
 
-    public String getCategoryByName(String name) {
+    public static String getCategoryByName(String name) {
 
         for (Category c: categories){
 

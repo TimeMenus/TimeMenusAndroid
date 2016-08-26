@@ -5,12 +5,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.express.apps.expresscafe.services.AuthService;
 import com.express.apps.expresscafe.services.DataService;
@@ -42,9 +42,23 @@ public class DashboardActivity extends AppCompatActivity {
 
         dataService = DataService.newInstance();
 
+        com.express.apps.expresscafe.models.Menu todayMenu = DataService.getTodayMenu();
+        TextView wellnessDesc=(TextView) findViewById(R.id.wellness_description);
 
-//        System.out.print("Item: "+todayMenu.getKey()+" "+todayMenu.getDate());
+        wellnessDesc.setText(DataService.getTodayMenuNote());
 
+//        while(todayMenu == null){
+//            imageView.setVisibility(View.INVISIBLE);
+//
+//            Button todayMenuButton=(Button)findViewById(R.id.button);
+//            todayMenuButton.setVisibility(View.INVISIBLE);
+//
+//            wellnessDesc.setVisibility(View.INVISIBLE);
+//
+//            TextView note=(TextView) findViewById(R.id.note);
+//            note.setVisibility(View.VISIBLE);
+//
+//        }
     }
 
     @Override
@@ -88,7 +102,7 @@ public class DashboardActivity extends AppCompatActivity {
         }
 
         if(item.getTitle().equals("Admin")){
-            Intent intent = new Intent(this,LoginActivity.class);
+            Intent intent = new Intent(this,AdminActivity.class);
 
             startActivity(intent);
         }
@@ -112,12 +126,6 @@ public class DashboardActivity extends AppCompatActivity {
 
         startActivity(intent);
     }
-
-    public void openAdminLoginPage(View view){
-
-    }
-
-
 
 
 }
