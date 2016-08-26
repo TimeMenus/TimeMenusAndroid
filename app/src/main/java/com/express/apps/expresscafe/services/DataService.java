@@ -68,8 +68,12 @@ public class DataService {
                         Log.d("Item",menuObject.getKey()+" "+menuObject.getDate());
                         todayMenu = menuObject;
                         todayMenuNote = todayMenu.getNote();
+                        setItemsListener();
+                        break;
                     }
                 }
+
+
             }
 
             @Override
@@ -127,7 +131,7 @@ public class DataService {
 
                     Menu todayMenu=menu.getValue(Menu.class);
 
-                    if(todayMenu.getItems() !=null) {
+                    if(todayMenu!=null && todayMenu.getItems() !=null) {
 
                         Iterator itemsItertr = todayMenu.getItems().entrySet().iterator();
 
@@ -203,6 +207,10 @@ public class DataService {
 
         return Collections.emptyList();
 
+    }
+
+    public static List<Item> getItems(){
+        return items;
     }
 
     public Item getDashboardItemForCategory(String categoryId){

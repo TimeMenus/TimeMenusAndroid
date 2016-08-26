@@ -19,7 +19,7 @@ import com.google.firebase.database.ValueEventListener;
 public class AdminActivity extends BaseActivity {
 
     private EditText note;
-    private String todayNote;
+//    private String todayNote;
     Menu menu=null;
 
     @Override
@@ -33,27 +33,30 @@ public class AdminActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin);
         note = (EditText) findViewById(R.id.edit_note);
-
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
+//
+//        FirebaseDatabase database = FirebaseDatabase.getInstance();
 
         menu = DataService.getTodayMenu();
-        if(menu!=null) {
-            DatabaseReference myRef = database.getReference("menues/" + menu.getKey());
 
-            myRef.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    todayNote = dataSnapshot.getValue(Menu.class).getNote();
-                    note.setText(todayNote);
-                    hideProgressDialog();
-                }
+        note.setText(menu.getNote());
 
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-                    System.out.println("The read failed: " + databaseError.getMessage());
-                }
-            });
-        }
+//        if(menu!=null) {
+//            DatabaseReference myRef = database.getReference("menues/" + menu.getKey());
+//
+//            myRef.addValueEventListener(new ValueEventListener() {
+//                @Override
+//                public void onDataChange(DataSnapshot dataSnapshot) {
+//                    todayNote = dataSnapshot.getValue(Menu.class).getNote();
+//                    note.setText(todayNote);
+//                    hideProgressDialog();
+//                }
+//
+//                @Override
+//                public void onCancelled(DatabaseError databaseError) {
+//                    System.out.println("The read failed: " + databaseError.getMessage());
+//                }
+//            });
+//        }
         Toolbar toolbar = (Toolbar) findViewById(R.id.my_toolbar_admin);
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
