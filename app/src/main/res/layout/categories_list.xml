@@ -52,8 +52,7 @@
             android:layout_width="match_parent"
             android:adjustViewBounds="true"
             android:scaleType="centerCrop"
-
-            android:id="@+id/imageView2"
+            android:id="@+id/icon"
             android:src="@drawable/camera"
             android:layout_below="@+id/Itemname"
             android:layout_alignParentLeft="true"
