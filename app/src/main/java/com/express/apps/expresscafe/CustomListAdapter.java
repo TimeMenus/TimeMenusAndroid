@@ -9,6 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.express.apps.expresscafe.models.Item;
+import com.express.apps.expresscafe.services.DataService;
 import com.squareup.picasso.Picasso;
 import java.net.URL;
 import java.util.List;
@@ -40,12 +41,17 @@ public class CustomListAdapter extends ArrayAdapter<String> {
 
         TextView txtTitle = (TextView) rowView.findViewById(R.id.Itemname);
         ImageView imageView = (ImageView) rowView.findViewById(R.id.icon);
+        TextView txtDescription = (TextView) rowView.findViewById(R.id.description);
+        TextView txtCategory = (TextView) rowView.findViewById(R.id.category);
+
 //        TextView extratxt = (TextView) rowView.findViewById(R.id.textView1);
 
 
         Item i=items.get(position);
 
         txtTitle.setText(i.getName());
+        txtCategory.setText(DataService.getCategoryById(i.getCategoryId()).getName());
+        txtDescription.setText(i.getDescription());
 
         Picasso.with(context).load(i.getPicture().getUrl()).into(imageView);
 
