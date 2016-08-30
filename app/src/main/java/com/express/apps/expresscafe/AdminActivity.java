@@ -33,8 +33,7 @@ public class AdminActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin);
         note = (EditText) findViewById(R.id.edit_note);
-//
-//        FirebaseDatabase database = FirebaseDatabase.getInstance();
+
 
         menu = DataService.getTodayMenu();
 
@@ -57,8 +56,10 @@ public class AdminActivity extends BaseActivity {
 //                }
 //            });
 //        }
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.my_toolbar_admin);
         setSupportActionBar(toolbar);
+
         if (getSupportActionBar() != null) {
             getSupportActionBar().setHomeButtonEnabled(true);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);

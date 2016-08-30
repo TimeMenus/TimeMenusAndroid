@@ -3,7 +3,9 @@ package com.express.apps.expresscafe.services;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.util.Log;
+import android.widget.TextView;
 
+import com.express.apps.expresscafe.R;
 import com.express.apps.expresscafe.models.Category;
 import com.express.apps.expresscafe.models.Item;
 import com.express.apps.expresscafe.models.Menu;
@@ -33,21 +35,20 @@ public class DataService {
     private static Menu todayMenu = null;
     private static String todayMenuNote = null;
 
-    public static DataService newInstance() {
+    public static void newInstance() {
 
         database = FirebaseDatabase.getInstance();
-        DataService ds = new DataService();
 
         setCategoriesListener();
         setMenuListener();
 //        Log.d("Item",DataService.getTodayMenu().getDate());
 //        setItemsListener();
 
-        return ds;
     }
 
     //Listeners
     private static void setMenuListener() {
+        System.out.println("setMenuListener");
         DatabaseReference myRef = database.getReference("menues");
         myRef.addValueEventListener(new ValueEventListener() {
 
@@ -58,7 +59,6 @@ public class DataService {
                 Iterator it = dataSnapshot.getChildren().iterator();
                 while (it.hasNext()) {
                     DataSnapshot menu = (DataSnapshot) it.next();
-//                    System.out.print("Item : "+menu.getKey());
 
 
                     Menu menuObject=(menu.getValue(Menu.class));
@@ -68,6 +68,7 @@ public class DataService {
                         Log.d("Item",menuObject.getKey()+" "+menuObject.getDate());
                         todayMenu = menuObject;
                         todayMenuNote = todayMenu.getNote();
+
                         setItemsListener();
                         break;
                     }
@@ -80,8 +81,19 @@ public class DataService {
             public void onCancelled(DatabaseError error) {
                 Log.w("TAG", "Failed to read value.", error.toException());
             }
+
+
         });
 
+    }
+
+    public static boolean isLoaded(){
+
+        if(todayMenu !=null){
+            return true;
+        }
+
+        return false;
     }
 
     private static void setCategoriesListener() {
@@ -114,11 +126,6 @@ public class DataService {
 
     public static void setItemsListener(){
 
-        if(todayMenu==null){
-            Log.d("Item","IS NULL");
-        }
-
-
         if(todayMenu!=null){
 
             DatabaseReference itemsRef = database.getReference("menues/"+todayMenu.getKey());
@@ -132,6 +139,7 @@ public class DataService {
                     Menu todayMenu=menu.getValue(Menu.class);
 
                     if(todayMenu!=null && todayMenu.getItems() !=null) {
+                        items=new ArrayList<Item>();
 
                         Iterator itemsItertr = todayMenu.getItems().entrySet().iterator();
 
@@ -141,42 +149,9 @@ public class DataService {
                             Item item = (Item) pair.getValue();
                             item.setKey((String) pair.getKey());
                             items.add(item);
-
-                            System.out.println(item.getKey() + " : CategoryID: " + item.getCategoryId() + " Name: " + item.getName());
-
                         }
 
                     }
-//                   DataSnapshot itemsHashMap =  dataSnapshot.getChildren();
-
-//                    Iterator it= dataSnapshot.getChildren().iterator();
-//
-//
-//                    while(it.hasNext()){
-//
-//                        DataSnapshot ds=(DataSnapshot)it.next();
-//
-//                        Item item=new Item();
-//                        item=(Item)ds.getValue();
-//                        item.setKey(ds.getKey());
-//
-//                        items.add(item);
-//                        System.out.println(item.getKey());
-//                    }
-
-
-
-//                    Iterator it=dataSnapshot.getChildren().iterator();
-//
-//                    while(it.hasNext()) {
-//
-//
-//                        DataSnapshot ds = (DataSnapshot) it.next();
-//                        Log.d("Item",(String)ds.getValue());
-//
-//                        Item item = (Item) ds.getValue();
-//
-//                    }
 
                 }
 
@@ -190,9 +165,6 @@ public class DataService {
     }
 
     public static Menu getTodayMenu(){
-
-
-
         return todayMenu;
     }
 
@@ -218,7 +190,13 @@ public class DataService {
     }
 
     //Categories
-    public Category getCategoryById(String key){
+    public static Category getCategoryById(String key){
+
+        for(Category c: categories){
+            if(c.getKey().equals(key)){
+                return c;
+            }
+        }
 
 
         return  new Category();
@@ -240,5 +218,9 @@ public class DataService {
         }
 
         return null;
+    }
+
+    public static void loadWellnessNote(TextView wellnessDesc) {
+        wellnessDesc.setText(todayMenuNote);
     }
 }

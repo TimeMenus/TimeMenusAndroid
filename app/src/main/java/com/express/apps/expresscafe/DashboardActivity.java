@@ -1,6 +1,6 @@
 package com.express.apps.expresscafe;
 
-import android.provider.ContactsContract;
+import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -22,8 +22,6 @@ public class DashboardActivity extends AppCompatActivity {
 
     Button button;
     AuthService authService;
-    DataService dataService;
-
 
 
     @Override
@@ -31,6 +29,16 @@ public class DashboardActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         authService = AuthService.newInstance();
+
+
+        String[] perms = {"android.permission.READ_EXTERNAL_STORAGE","android.permission.WRITE_EXTERNAL_STORAGE", "android.permission.CAMERA"};
+
+        int permsRequestCode = 200;
+
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            requestPermissions(perms, permsRequestCode);
+        }
+
 
         setContentView(R.layout.activity_main);
 
@@ -40,12 +48,16 @@ public class DashboardActivity extends AppCompatActivity {
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
 
-        dataService = DataService.newInstance();
+        DataService.newInstance();
+
+        System.out.println("Loaded .."+DataService.isLoaded());
 
         com.express.apps.expresscafe.models.Menu todayMenu = DataService.getTodayMenu();
         TextView wellnessDesc=(TextView) findViewById(R.id.wellness_description);
 
-        wellnessDesc.setText(DataService.getTodayMenuNote());
+        DataService.loadWellnessNote(wellnessDesc);
+
+//        wellnessDesc.setText(DataService.getTodayMenuNote());
 
 //        while(todayMenu == null){
 //            imageView.setVisibility(View.INVISIBLE);
@@ -59,6 +71,7 @@ public class DashboardActivity extends AppCompatActivity {
 //            note.setVisibility(View.VISIBLE);
 //
 //        }
+
     }
 
     @Override
@@ -121,11 +134,9 @@ public class DashboardActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void openTodayMenu(View view){
+    public void openTodayMenu(View view) {
         Intent intent = new Intent(this, MenuActivity.class);
 
         startActivity(intent);
     }
-
-
 }
