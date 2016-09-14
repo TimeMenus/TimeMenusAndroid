@@ -1,6 +1,8 @@
 package com.express.apps.expresscafe;
 
+import android.os.AsyncTask;
 import android.os.Build;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,9 +18,16 @@ import com.express.apps.expresscafe.services.AuthService;
 import com.express.apps.expresscafe.services.DataService;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.MutableData;
+import com.google.firebase.database.Transaction;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 
-public class DashboardActivity extends AppCompatActivity {
+public class DashboardActivity extends BaseActivity {
 
     Button button;
     AuthService authService;
@@ -26,10 +35,10 @@ public class DashboardActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        showProgressDialog();
         super.onCreate(savedInstanceState);
 
         authService = AuthService.newInstance();
-
 
         String[] perms = {"android.permission.READ_EXTERNAL_STORAGE","android.permission.WRITE_EXTERNAL_STORAGE", "android.permission.CAMERA"};
 
@@ -39,10 +48,9 @@ public class DashboardActivity extends AppCompatActivity {
             requestPermissions(perms, permsRequestCode);
         }
 
-
         setContentView(R.layout.activity_main);
 
-        ImageView imageView = (ImageView) findViewById(R.id.imageView);
+        final ImageView imageView = (ImageView) findViewById(R.id.imageView);
         imageView.setImageResource(R.drawable.welness_web);
 
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
@@ -50,15 +58,41 @@ public class DashboardActivity extends AppCompatActivity {
 
         DataService.newInstance();
 
-        System.out.println("Loaded .."+DataService.isLoaded());
+        final Timer t = new Timer();
+        t.scheduleAtFixedRate(new TimerTask() {
+                                  @Override
+                                  public void run() {
+                                      if (!DataService.isLoaded()) {
+                                          System.out.println("Firebase data not loaded yet...");
+                                      } else {
+                                          final com.express.apps.expresscafe.models.Menu todayMenu = DataService.getTodayMenu();
+                                          final TextView wellnessDesc=(TextView) findViewById(R.id.wellness_description);
 
-        com.express.apps.expresscafe.models.Menu todayMenu = DataService.getTodayMenu();
-        TextView wellnessDesc=(TextView) findViewById(R.id.wellness_description);
+                                          runOnUiThread(new Runnable() {
+                                              @Override
+                                              public void run() {
+                                                  if(todayMenu==null){
+                                                      imageView.setVisibility(View.INVISIBLE);
+                                                      Button todayMenuButton = (Button) findViewById(R.id.button);
+                                                      todayMenuButton.setVisibility(View.INVISIBLE);
+                                                  }
+                                                  DataService.loadWellnessNote(wellnessDesc);
 
-        DataService.loadWellnessNote(wellnessDesc);
+                                              }
+                                          });
+                                          hideProgressDialog();
+                                          t.cancel();
+                                          t.purge();
+                                      }
+                                  }
+                              },
+                0,
+                500);
 
 //        wellnessDesc.setText(DataService.getTodayMenuNote());
+//       DataService.loadWellnessNote(wellnessDesc);
 
+//
 //        while(todayMenu == null){
 //            imageView.setVisibility(View.INVISIBLE);
 //
@@ -114,8 +148,14 @@ public class DashboardActivity extends AppCompatActivity {
             startActivity(intent);
         }
 
-        if(item.getTitle().equals("Admin")){
-            Intent intent = new Intent(this,AdminActivity.class);
+        if(item.getTitle().equals("Admin")) {
+            Intent intent = null;
+            if (DataService.getTodayMenu() != null) {
+                intent = new Intent(this, AdminActivity.class);
+            } else {
+                intent = new Intent(this, AddMenuToday.class);
+            }
+
 
             startActivity(intent);
         }
