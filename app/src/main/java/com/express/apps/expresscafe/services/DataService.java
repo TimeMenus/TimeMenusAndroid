@@ -1,5 +1,6 @@
 package com.express.apps.expresscafe.services;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.util.Log;
@@ -23,6 +24,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
+import java.util.concurrent.CompletableFuture;
 
 /**
  * Created by fabdin on 8/3/2016.
@@ -41,6 +43,7 @@ public class DataService {
 
         setCategoriesListener();
         setMenuListener();
+
 //        Log.d("Item",DataService.getTodayMenu().getDate());
 //        setItemsListener();
 
@@ -48,6 +51,7 @@ public class DataService {
 
     //Listeners
     private static void setMenuListener() {
+
         System.out.println("setMenuListener");
         DatabaseReference myRef = database.getReference("menues");
         myRef.addValueEventListener(new ValueEventListener() {
@@ -60,39 +64,34 @@ public class DataService {
                 while (it.hasNext()) {
                     DataSnapshot menu = (DataSnapshot) it.next();
 
-
                     Menu menuObject=(menu.getValue(Menu.class));
                     menuObject.setKey(menu.getKey());
 
-                    if (menuObject.getDate().equals(UtilsService.getTodayDate())) {
+                    if (menuObject!=null && menuObject.getDate().equals(UtilsService.getTodayDate())) {
                         Log.d("Item",menuObject.getKey()+" "+menuObject.getDate());
                         todayMenu = menuObject;
                         todayMenuNote = todayMenu.getNote();
-
                         setItemsListener();
                         break;
+                    } else{
+                        todayMenuNote = "Menu is not here yet.";
                     }
+
                 }
-
-
             }
 
             @Override
             public void onCancelled(DatabaseError error) {
                 Log.w("TAG", "Failed to read value.", error.toException());
             }
-
-
         });
-
     }
 
     public static boolean isLoaded(){
 
-        if(todayMenu !=null){
+        if(todayMenu !=null || todayMenuNote != null){
             return true;
         }
-
         return false;
     }
 
