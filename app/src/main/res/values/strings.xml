@@ -2,7 +2,7 @@
     <string name="app_name">CAFÉ</string>
     <string name="image">Image</string>
     <string name="main_activity_label">Main Activity</string>
-    <string name="wellness_now_desc">Description .................... </string>
+    <string name="wellness_now_desc"></string>
     <string name="title_activity_admin_login">Sign in</string>
     <string name="no_menu_note">Today\'s menu is not here yet, come back later.</string>
 
