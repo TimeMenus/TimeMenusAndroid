@@ -1,5 +1,6 @@
 package com.express.apps.expresscafe.services;
 
+import android.content.res.Resources;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.ContactsContract;
@@ -74,7 +75,8 @@ public class DataService {
                         setItemsListener();
                         break;
                     } else{
-                        todayMenuNote = "Menu is not here yet.";
+//                        todayMenuNote = Resources.getSystem().getString(R.string.no_menu_note);
+                        todayMenuNote = "No Menu";
                     }
 
                 }
