@@ -10,16 +10,16 @@ import android.widget.EditText;
 import com.express.apps.expresscafe.models.Menu;
 import com.express.apps.expresscafe.services.AuthService;
 import com.express.apps.expresscafe.services.DataService;
+import com.express.apps.expresscafe.services.UtilsService;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-public class AdminActivity extends BaseActivity {
+public class AddMenuToday extends BaseActivity {
 
     private EditText note;
-//    private String todayNote;
     Menu menu=null;
 
     @Override
@@ -31,31 +31,8 @@ public class AdminActivity extends BaseActivity {
         showProgressDialog();
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_admin);
-        note = (EditText) findViewById(R.id.edit_note);
-
-
-        menu = DataService.getTodayMenu();
-
-        note.setText(menu.getNote());
-
-//        if(menu!=null) {
-//            DatabaseReference myRef = database.getReference("menues/" + menu.getKey());
-//
-//            myRef.addValueEventListener(new ValueEventListener() {
-//                @Override
-//                public void onDataChange(DataSnapshot dataSnapshot) {
-//                    todayNote = dataSnapshot.getValue(Menu.class).getNote();
-//                    note.setText(todayNote);
-//                    hideProgressDialog();
-//                }
-//
-//                @Override
-//                public void onCancelled(DatabaseError databaseError) {
-//                    System.out.println("The read failed: " + databaseError.getMessage());
-//                }
-//            });
-//        }
+        setContentView(R.layout.activity_add_menu_today);
+        note = (EditText) findViewById(R.id.create_note);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.my_toolbar_admin);
         setSupportActionBar(toolbar);
@@ -69,15 +46,16 @@ public class AdminActivity extends BaseActivity {
 
     }
 
-    public void saveNote(View view) {
+    public void createNote(View view) {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("menues/" + menu.getKey() + "/note");
-        myRef.setValue(note.getText().toString());
-    }
-
-    public void addItems(View view) {
-        Intent intent = new Intent(this, AddItemActivity.class);
-        startActivity(intent);
+        DatabaseReference myRef = database.getReference("menues/");
+        Menu menu = new Menu(note.getText().toString(), UtilsService.getTodayDate());
+        boolean addMenuStatus = myRef.push().setValue(menu).isSuccessful();
+        System.out.println();
+        if(addMenuStatus){
+            Intent intent = new Intent(this, AddItemActivity.class);
+            startActivity(intent);
+        }
     }
 
     public boolean onOptionsItemSelected(MenuItem item) {

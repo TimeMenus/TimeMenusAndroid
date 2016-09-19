@@ -1,8 +1,6 @@
 package com.express.apps.expresscafe;
 
 import android.app.AlertDialog;
-import android.app.DatePickerDialog;
-import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
@@ -22,8 +20,6 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
-import android.widget.TextView;
-import android.view.View.OnClickListener;
 
 import com.express.apps.expresscafe.models.Item;
 import com.express.apps.expresscafe.models.Picture;
@@ -39,8 +35,6 @@ import com.google.firebase.storage.UploadTask;
 
 import java.io.File;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Locale;
 
 public class AddItemActivity extends BaseActivity {
 
@@ -51,7 +45,7 @@ public class AddItemActivity extends BaseActivity {
     String itemDescStr;
     String menuItemSelStr;
     Boolean dashboardSel;
-    DataService dataService = null;
+
     private EditText itemName, itemDesc;
     private Spinner menuItem;
     private CheckBox dashboardChk;
@@ -59,15 +53,6 @@ public class AddItemActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
-        Toolbar toolbar = (Toolbar) findViewById(R.id.my_toolbar_additem);
-        setSupportActionBar(toolbar);
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        }
-
-        dataService = DataService.newInstance();
-
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_additem);
@@ -83,6 +68,13 @@ public class AddItemActivity extends BaseActivity {
         countryView.setAdapter(adapter);
 
         viewImage = (ImageView) findViewById(R.id.viewImage);
+
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.my_toolbar_additem);
+        setSupportActionBar(toolbar);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
     }
 
 
@@ -122,12 +114,12 @@ public class AddItemActivity extends BaseActivity {
                 downloadUrl = taskSnapshot.getDownloadUrl();
                 Picture pic = new Picture(picName, downloadUrl.toString());
 
-                String categoryID = dataService.getCategoryByName(menuItemSelStr);
+                String categoryID = DataService.getCategoryByName(menuItemSelStr);
 
                 Item item = new Item(categoryID, dashboardSel, itemDescStr, itemNameStr, pic);
 
                 FirebaseDatabase database = FirebaseDatabase.getInstance();
-                DatabaseReference myRef = database.getReference("menues/" + dataService.getTodayMenu().getKey() + "/items");
+                DatabaseReference myRef = database.getReference("menues/" + DataService.getTodayMenu().getKey() + "/items");
                 myRef.push().setValue(item);
                 finish();
                 startActivity(getIntent());

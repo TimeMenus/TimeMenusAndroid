@@ -14,6 +14,14 @@ public class Menu {
     private HashMap<String, Item> items;
     String date;
 
+    public Menu(){
+
+    }
+
+    public Menu(String note, String date) {
+        this.note = note;
+        this.date = date;
+    }
 
     public String getNote() {
         return note;
