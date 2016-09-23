@@ -1,31 +1,22 @@
-package com.express.apps.expresscafe.services;
+package com.timemenus.app.services;
 
-import android.content.res.Resources;
-import android.os.AsyncTask;
-import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.util.Log;
 import android.widget.TextView;
 
-import com.express.apps.expresscafe.R;
-import com.express.apps.expresscafe.models.Category;
-import com.express.apps.expresscafe.models.Item;
-import com.express.apps.expresscafe.models.Menu;
+import com.timemenus.app.models.Category;
+import com.timemenus.app.models.Item;
+import com.timemenus.app.models.Menu;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
 import java.util.Map;
-import java.util.concurrent.CompletableFuture;
 
 /**
  * Created by fabdin on 8/3/2016.

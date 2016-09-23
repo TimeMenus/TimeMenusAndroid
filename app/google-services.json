@@ -1,27 +1,27 @@
 {
   "project_info": {
-    "project_number": "379174658751",
-    "firebase_url": "https://express-cafe-a7687.firebaseio.com",
-    "project_id": "express-cafe-a7687",
-    "storage_bucket": "express-cafe-a7687.appspot.com"
+    "project_number": "259542585577",
+    "firebase_url": "https://time-menus.firebaseio.com",
+    "project_id": "time-menus",
+    "storage_bucket": "time-menus.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:379174658751:android:b76a9e855575abac",
+        "mobilesdk_app_id": "1:259542585577:android:caf46a359f7cad82",
         "android_client_info": {
-          "package_name": "com.express.apps.expresscafe"
+          "package_name": "com.timemenus.app"
         }
       },
       "oauth_client": [
         {
-          "client_id": "379174658751-f3da4m443rng74q1kb47km4a8h9s8ki6.apps.googleusercontent.com",
+          "client_id": "259542585577-1be3kjatkabg50ca3s8ucrfvhjdg8hg2.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAf9Isa5pUzEpQUk7hU-7mlaVDtSyfTZK8"
+          "current_key": "AIzaSyA1t-_yWnTmDqE0enuL2HM_J6L0Cf6Rtq0"
         }
       ],
       "services": {

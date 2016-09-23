@@ -1,6 +1,4 @@
-package com.express.apps.expresscafe.models;
-
-import android.webkit.HttpAuthHandler;
+package com.timemenus.app.models;
 
 import java.util.HashMap;
 

@@ -1,4 +1,4 @@
-package com.express.apps.expresscafe.models;
+package com.timemenus.app.models;
 
 /**
  * Created by fabdin on 8/3/2016.

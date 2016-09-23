@@ -1,19 +1,13 @@
-package com.express.apps.expresscafe;
+package com.timemenus.app;
 
 import android.app.ListActivity;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
-
-import com.express.apps.expresscafe.models.Category;
-import com.express.apps.expresscafe.models.Item;
-import com.express.apps.expresscafe.models.Menu;
-import com.express.apps.expresscafe.services.DataService;
+import com.timemenus.app.models.Item;
+import com.timemenus.app.services.DataService;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,10 +1,7 @@
-package com.express.apps.expresscafe;
+package com.timemenus.app;
 
 import android.app.ProgressDialog;
 import android.support.v7.app.AppCompatActivity;
-
-import com.express.apps.expresscafe.R;
-
 public class BaseActivity extends AppCompatActivity {
 
     private ProgressDialog mProgressDialog;

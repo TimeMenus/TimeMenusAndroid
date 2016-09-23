@@ -1,9 +1,6 @@
-package com.express.apps.expresscafe;
+package com.timemenus.app;
 
-import android.os.AsyncTask;
 import android.os.Build;
-import android.os.Handler;
-import android.support.v7.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -13,15 +10,10 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.Button;
 import android.widget.TextView;
-
-import com.express.apps.expresscafe.services.AuthService;
-import com.express.apps.expresscafe.services.DataService;
+import com.timemenus.app.services.AuthService;
+import com.timemenus.app.services.DataService;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.MutableData;
-import com.google.firebase.database.Transaction;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -65,7 +57,7 @@ public class DashboardActivity extends BaseActivity {
                                       if (!DataService.isLoaded()) {
                                           System.out.println("Firebase data not loaded yet...");
                                       } else {
-                                          final com.express.apps.expresscafe.models.Menu todayMenu = DataService.getTodayMenu();
+                                          final com.timemenus.app.models.Menu todayMenu = DataService.getTodayMenu();
                                           final TextView wellnessDesc=(TextView) findViewById(R.id.wellness_description);
 
                                           runOnUiThread(new Runnable() {

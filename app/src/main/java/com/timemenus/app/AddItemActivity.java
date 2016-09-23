@@ -1,4 +1,4 @@
-package com.express.apps.expresscafe;
+package com.timemenus.app;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -20,11 +20,11 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import com.timemenus.app.models.Item;
+import com.timemenus.app.models.Picture;
+import com.timemenus.app.services.DataService;
+import com.timemenus.app.services.UtilsService;
 
-import com.express.apps.expresscafe.models.Item;
-import com.express.apps.expresscafe.models.Picture;
-import com.express.apps.expresscafe.services.DataService;
-import com.express.apps.expresscafe.services.UtilsService;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
@@ -195,7 +195,7 @@ public class AddItemActivity extends BaseActivity {
      */
     private File getOutputMediaFile(int type) {
         File mediaStorageDir = new File(Environment.getExternalStoragePublicDirectory(
-                Environment.DIRECTORY_DCIM), "CafeExpress");
+                Environment.DIRECTORY_DCIM), "TIMEMenus");
 
         /**Create the storage directory if it does not exist*/
         if (!mediaStorageDir.exists()) {
