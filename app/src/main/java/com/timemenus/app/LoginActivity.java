@@ -15,6 +15,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.AuthResult;
+import com.timemenus.app.services.DataService;
 
 public class LoginActivity extends BaseActivity {
 
@@ -49,8 +50,15 @@ public class LoginActivity extends BaseActivity {
                     // User is signed in
                     Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
                     msgArea.setText("Welcome " + user.getEmail());
-                    Intent i = new Intent(LoginActivity.this, AdminActivity.class);
-                    startActivity(i);
+                    Intent intent = null;
+                    if (DataService.getTodayMenu() != null) {
+                        intent = new Intent(LoginActivity.this, AdminActivity.class);
+                    } else {
+                        intent = new Intent(LoginActivity.this, AddMenuToday.class);
+                    }
+                    startActivity(intent);
+//                    Intent i = new Intent(LoginActivity.this, AdminActivity.class);
+//                    startActivity(i);
 
                     signOut.setVisibility(View.VISIBLE);
                     signIn.setVisibility(View.GONE);
@@ -133,8 +141,13 @@ public class LoginActivity extends BaseActivity {
 
 
                         }else {
-                            Intent i = new Intent(LoginActivity.this, AdminActivity.class);
-                            startActivity(i);
+                            Intent intent = null;
+                            if (DataService.getTodayMenu() != null) {
+                                intent = new Intent(LoginActivity.this, AdminActivity.class);
+                            } else {
+                                intent = new Intent(LoginActivity.this, AddMenuToday.class);
+                            }
+                            startActivity(intent);
                         }
 
                         hideProgressDialog();
