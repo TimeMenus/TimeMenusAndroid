@@ -1,4 +1,4 @@
-package com.timemenus.app.models;
+package com.timemenus.android.models;
 
 /**
  * Created by fabdin on 8/2/2016.

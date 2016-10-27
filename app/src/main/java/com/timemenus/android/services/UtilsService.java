@@ -1,4 +1,4 @@
-package com.timemenus.app.services;
+package com.timemenus.android.services;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -16,6 +16,8 @@ public class UtilsService {
         String day = new SimpleDateFormat("d").format(date);
         String dayWthSufx = getDayOfMonthSuffix(Integer.parseInt(day));
         String todayDate = mon + " " + dayWthSufx + " " + year;
+
+//        return "Oct 20th 16";
         return todayDate;
     }
 

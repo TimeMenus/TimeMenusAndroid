@@ -1,4 +1,4 @@
-package com.timemenus.app.services;
+package com.timemenus.android.services;
 
 import com.google.firebase.auth.FirebaseAuth;
 

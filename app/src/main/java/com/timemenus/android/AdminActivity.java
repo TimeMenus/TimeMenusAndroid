@@ -1,14 +1,15 @@
-package com.timemenus.app;
+package com.timemenus.android;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
-import com.timemenus.app.models.Menu;
-import com.timemenus.app.services.AuthService;
-import com.timemenus.app.services.DataService;
+import com.timemenus.android.models.Menu;
+import com.timemenus.android.services.AuthService;
+import com.timemenus.android.services.DataService;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -23,6 +24,14 @@ public class AdminActivity extends BaseActivity {
 
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
+
+        String[] perms = {"android.permission.READ_EXTERNAL_STORAGE","android.permission.WRITE_EXTERNAL_STORAGE", "android.permission.CAMERA"};
+
+        int permsRequestCode = 200;
+
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            requestPermissions(perms, permsRequestCode);
+        }
 
         showProgressDialog();
 

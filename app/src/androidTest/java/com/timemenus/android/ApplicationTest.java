@@ -1,4 +1,4 @@
-package com.timemenus.app;
+package com.timemenus.android;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

@@ -1,4 +1,4 @@
-package com.timemenus.app;
+package com.timemenus.android;
 
 import android.app.ProgressDialog;
 import android.support.v7.app.AppCompatActivity;

@@ -1,4 +1,4 @@
-package com.timemenus.app.models;
+package com.timemenus.android.models;
 
 import java.util.HashMap;
 

@@ -1,8 +1,8 @@
-package com.timemenus.app.services;
+package com.timemenus.android.services;
 
 import android.util.Log;
 
-import com.timemenus.app.models.Menu;
+import com.timemenus.android.models.Menu;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;

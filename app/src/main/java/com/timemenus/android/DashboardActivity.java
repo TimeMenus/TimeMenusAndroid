@@ -1,4 +1,4 @@
-package com.timemenus.app;
+package com.timemenus.android;
 
 import android.os.Build;
 import android.content.Intent;
@@ -10,8 +10,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.Button;
 import android.widget.TextView;
-import com.timemenus.app.services.AuthService;
-import com.timemenus.app.services.DataService;
+import com.timemenus.android.services.AuthService;
+import com.timemenus.android.services.DataService;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -32,14 +32,6 @@ public class DashboardActivity extends BaseActivity {
 
         authService = AuthService.newInstance();
 
-        String[] perms = {"android.permission.READ_EXTERNAL_STORAGE","android.permission.WRITE_EXTERNAL_STORAGE", "android.permission.CAMERA"};
-
-        int permsRequestCode = 200;
-
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            requestPermissions(perms, permsRequestCode);
-        }
-
         setContentView(R.layout.activity_main);
 
         final ImageView imageView = (ImageView) findViewById(R.id.imageView);
@@ -57,7 +49,7 @@ public class DashboardActivity extends BaseActivity {
                                       if (!DataService.isLoaded()) {
                                           System.out.println("Firebase data not loaded yet...");
                                       } else {
-                                          final com.timemenus.app.models.Menu todayMenu = DataService.getTodayMenu();
+                                          final com.timemenus.android.models.Menu todayMenu = DataService.getTodayMenu();
                                           final TextView wellnessDesc=(TextView) findViewById(R.id.wellness_description);
 
                                           runOnUiThread(new Runnable() {

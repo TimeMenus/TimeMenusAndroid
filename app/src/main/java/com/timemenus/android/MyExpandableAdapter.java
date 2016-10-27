@@ -1,4 +1,4 @@
-package com.timemenus.app;
+package com.timemenus.android;
 import java.util.ArrayList;
 
 import android.app.Activity;

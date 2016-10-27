@@ -1,4 +1,4 @@
-package com.timemenus.app;
+package com.timemenus.android;
 
 import android.app.Activity;
 import android.os.AsyncTask;
@@ -8,8 +8,8 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-import com.timemenus.app.models.Item;
-import com.timemenus.app.services.DataService;
+import com.timemenus.android.models.Item;
+import com.timemenus.android.services.DataService;
 import com.squareup.picasso.Picasso;
 import java.net.URL;
 import java.util.List;

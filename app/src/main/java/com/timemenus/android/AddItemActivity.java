@@ -1,4 +1,4 @@
-package com.timemenus.app;
+package com.timemenus.android;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -20,10 +20,10 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
-import com.timemenus.app.models.Item;
-import com.timemenus.app.models.Picture;
-import com.timemenus.app.services.DataService;
-import com.timemenus.app.services.UtilsService;
+import com.timemenus.android.models.Item;
+import com.timemenus.android.models.Picture;
+import com.timemenus.android.services.DataService;
+import com.timemenus.android.services.UtilsService;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;

@@ -1,11 +1,11 @@
-package com.timemenus.app.services;
+package com.timemenus.android.services;
 
 import android.util.Log;
 import android.widget.TextView;
 
-import com.timemenus.app.models.Category;
-import com.timemenus.app.models.Item;
-import com.timemenus.app.models.Menu;
+import com.timemenus.android.models.Category;
+import com.timemenus.android.models.Item;
+import com.timemenus.android.models.Menu;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -67,7 +67,7 @@ public class DataService {
                         break;
                     } else{
 //                        todayMenuNote = Resources.getSystem().getString(R.string.no_menu_note);
-                        todayMenuNote = "No Menu";
+                        todayMenuNote = "The menu is not here yet, come back later.";
                     }
 
                 }

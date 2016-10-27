@@ -1,4 +1,4 @@
-package com.timemenus.app;
+package com.timemenus.android;
 
 import android.app.ListActivity;
 import android.os.Bundle;
@@ -6,8 +6,8 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
-import com.timemenus.app.models.Item;
-import com.timemenus.app.services.DataService;
+import com.timemenus.android.models.Item;
+import com.timemenus.android.services.DataService;
 
 import java.util.ArrayList;
 import java.util.List;
