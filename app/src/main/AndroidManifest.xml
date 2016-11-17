@@ -20,31 +20,24 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         <activity
-            android:name="com.timemenus.android.DashboardActivity"
+            android:name=".DashboardActivity"
+            android:label="@string/app_name">
+        </activity>
+
+        <activity android:name=".MenuActivity" />
+        <activity android:name=".LoginActivity" />
+        <activity android:name=".AddItemActivity" />
+        <activity android:name=".AdminActivity" />
+        <activity android:name=".AddMenuToday" />
+        <activity
+            android:name=".SelectActivity"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-        <!-- <service android:name=""> -->
-        <!--  -->
-        <!-- </service> -->
-        <!-- <receiver android:name=""> -->
-        <!--  -->
-        <!-- </receiver> -->
-        <!-- <provider -->
-        <!-- android:authorities="" -->
-        <!-- android:name=""> -->
-        <!--  -->
-        <!-- </provider> -->
 
-        <activity android:name="com.timemenus.android.MenuActivity" />
-        <activity android:name="com.timemenus.android.LoginActivity" />
-        <activity android:name="com.timemenus.android.AddItemActivity" />
-        <activity android:name="com.timemenus.android.AdminActivity" />
-        <activity android:name="com.timemenus.android.AddMenuToday"></activity>
+        </activity>
     </application>
 
 </manifest>
