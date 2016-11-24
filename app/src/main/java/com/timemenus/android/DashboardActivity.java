@@ -10,6 +10,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.timemenus.android.services.AuthService;
 import com.timemenus.android.services.DataService;
 import com.google.firebase.auth.FirebaseAuth;
@@ -106,7 +108,11 @@ public class DashboardActivity extends BaseActivity {
 
             item.setVisible(false);
 
-            if((item.getTitle().equals("Admin")|| item.getTitle().equals("Logout")) && user!=null) {
+
+
+            if((item.getTitle().equals("Admin")||
+                    item.getTitle().equals("Logout") ||
+                    item.getTitle().equals("Test")) && user!=null) {
                 item.setVisible(true);
             }
 
@@ -140,6 +146,12 @@ public class DashboardActivity extends BaseActivity {
                 intent = new Intent(this, AddMenuToday.class);
             }
 
+            startActivity(intent);
+        }
+
+        if(item.getTitle().equals("Test")) {
+
+            Intent intent = new Intent(this,TestActivity.class);
 
             startActivity(intent);
         }
