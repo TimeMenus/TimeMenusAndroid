@@ -38,6 +38,7 @@
 
         </activity>
         <activity android:name=".TestActivity"></activity>
+        <service android:name=".services.LocalService" android:enabled="true"/>
     </application>
 
 </manifest>

@@ -37,8 +37,8 @@ public class TestActivity extends Activity {
 
         System.out.println(mBound);
 
-//        int num = mService.getRandomNumber();
-//        Toast.makeText(this, "number: " + num, Toast.LENGTH_SHORT).show();
+        int num = mService.getRandomNumber();
+        Toast.makeText(this, "number: " + num, Toast.LENGTH_SHORT).show();
 
     }
 
@@ -50,10 +50,10 @@ public class TestActivity extends Activity {
         super.onStop();
 
         // Unbind from the service
-//        if (mBound) {
+        if (mBound) {
             unbindService(mConnection);
             mBound = false;
-//        }
+        }
     }
 
     /** Defines callbacks for service binding, passed to bindService() */
