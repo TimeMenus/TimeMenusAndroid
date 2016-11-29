@@ -22,7 +22,8 @@
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         <activity
             android:name=".DashboardActivity"
-            android:label="@string/app_name"></activity>
+            android:label="@string/app_name" />
+
         <activity android:name=".MenuActivity" />
         <activity android:name=".LoginActivity" />
         <activity android:name=".AddItemActivity" />
@@ -33,10 +34,12 @@
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
+        <activity android:name=".TestActivity"></activity>
+        <service android:name=".services.LocalService" android:enabled="true"/>
         <activity android:name=".SendNotifActivity"></activity>
 
         <!-- [START firebase_service] -->
@@ -58,4 +61,5 @@
 
         <!-- [END firebase_service] -->
     </application>
+
 </manifest>

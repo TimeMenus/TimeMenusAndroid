@@ -15,4 +15,8 @@
         android:title="Admin"
         app:showAsAction="never" />
 
+    <item android:id="@+id/test"
+        android:title="Test"
+        app:showAsAction="never" />
+
 </menu>
