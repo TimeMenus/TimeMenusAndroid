@@ -49,8 +49,6 @@ public class AddMenuToday extends BaseActivity {
         myRef.push().setValue(menu);
         Intent intent = new Intent(this, AdminActivity.class);
         startActivity(intent);
-
-
     }
 
     public boolean onOptionsItemSelected(MenuItem item) {

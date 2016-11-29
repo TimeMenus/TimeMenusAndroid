@@ -40,6 +40,8 @@
     <string name="save_item">Save Item</string>
     <string name="add_item">Add Item</string>
     <string name="save_note">Save Note</string>
+    <string name="create_notification">Create Notification</string>
+    <string name="send_notification">Send Notification</string>
     <string name="wellnessnow">WellnessNOW</string>
     <string name="create_note">Create Note</string>
 
