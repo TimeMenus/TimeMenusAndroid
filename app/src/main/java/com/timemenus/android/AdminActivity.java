@@ -6,18 +6,25 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
+
+import com.google.gson.JsonObject;
 import com.timemenus.android.models.Menu;
 import com.timemenus.android.services.AuthService;
 import com.timemenus.android.services.DataService;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.timemenus.android.services.FCMHelper;
+
+import java.util.Arrays;
 
 public class AdminActivity extends BaseActivity {
 
     private EditText note;
 //    private String todayNote;
     Menu menu=null;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,10 +91,31 @@ public class AdminActivity extends BaseActivity {
         Intent intent = new Intent(this, AddItemActivity.class);
         startActivity(intent);
     }
-
+// to use in future to make a custom notification
     public void createNotification(View view) {
         Intent intent = new Intent(this, SendNotifActivity.class);
         startActivity(intent);
+    }
+
+    public void menuIsLive(View view) {
+        Button btn = (Button) findViewById(R.id.menu_islive);
+        JsonObject obj = new JsonObject();
+        //to many
+        //{"registration_ids":["d1wA9q8qqmU:APA91bFM62c_aZhO6e8W5Yct2GftRfGnko2YENU00RefMnHxXWN507A-MDm-Cigi2wKQdVWwlLc2gdNfnGyyFxCWK3ED4V2f2plF-9gun8YbPLolV-5XTAsyHzP2NU3xSOo5ncZhTWOZ",
+        // "ci4M9FKWN54:APA91bHrzEKX0lxXrOZSeA6cnTsN1AqC7Cb-UjDln7OixX7EQJE1zczK5XzDVzYyALsnmAekuTvaO29K3vFqfScWmrfLSbVJk1vUfB04H6lMU7wa4ye64rO5Pb6eGmXv6WcTCwPujly5"],"notification":{"body":"Menu Ready"},"priority":10}
+        obj.addProperty("to","d1wA9q8qqmU:APA91bFM62c_aZhO6e8W5Yct2GftRfGnko2YENU00RefMnHxXWN507A-MDm-Cigi2wKQdVWwlLc2gdNfnGyyFxCWK3ED4V2f2plF-9gun8YbPLolV-5XTAsyHzP2NU3xSOo5ncZhTWOZ");
+//        obj.addProperty("to","ci4M9FKWN54:APA91bHrzEKX0lxXrOZSeA6cnTsN1AqC7Cb-UjDln7OixX7EQJE1zczK5XzDVzYyALsnmAekuTvaO29K3vFqfScWmrfLSbVJk1vUfB04H6lMU7wa4ye64rO5Pb6eGmXv6WcTCwPujly5");
+        JsonObject objBody = new JsonObject();
+        objBody.addProperty("body","Menu Ready");
+        obj.add("notification", objBody);
+        obj.addProperty("priority", 10);
+        String result = FCMHelper.sendNotification(obj);
+
+//        if(result == "failure") {
+//            System.out.println(result);
+            btn.setEnabled(false);
+//        }
+
     }
 
 

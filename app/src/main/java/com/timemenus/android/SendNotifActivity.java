@@ -1,3 +1,5 @@
+//currently this is not used, as we are making the menu live message standard and it is done in adminactivity.
+
 package com.timemenus.android;
 
 import android.content.Intent;
