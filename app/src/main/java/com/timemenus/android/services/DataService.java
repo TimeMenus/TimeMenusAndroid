@@ -11,6 +11,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.timemenus.android.models.RegistrationIDs;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -28,6 +29,8 @@ public class DataService {
     private static List<Item> items = new ArrayList<>();
     private static Menu todayMenu = null;
     private static String todayMenuNote = null;
+    private static List<RegistrationIDs> registrationids = new ArrayList<>();
+
 
     public static void newInstance() {
 
@@ -35,6 +38,7 @@ public class DataService {
 
         setCategoriesListener();
         setMenuListener();
+        setRegistrationIDsListener();
 
 //        Log.d("Item",DataService.getTodayMenu().getDate());
 //        setItemsListener();
@@ -115,6 +119,35 @@ public class DataService {
         });
 
     }
+
+    private static void setRegistrationIDsListener() {
+
+        DatabaseReference registrationidsRef = database.getReference("registration_ids");
+        registrationidsRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                Iterator it=dataSnapshot.getChildren().iterator();
+                registrationids = new ArrayList<RegistrationIDs>();
+                while(it.hasNext()){
+                    DataSnapshot ds=(DataSnapshot) it.next();
+                    RegistrationIDs r=new RegistrationIDs();
+//                    r.setKey(ds.getKey());
+                    r.setName((String)ds.getValue());
+
+                    registrationids.add(r);
+                }
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+    }
+
 
     public static void setItemsListener(){
 
@@ -199,6 +232,12 @@ public class DataService {
 
         return categories;
     }
+
+    public static List<RegistrationIDs> getRegistrationIDs(){
+        return registrationids;
+    }
+
+
 
     public static String getCategoryByName(String name) {
 
