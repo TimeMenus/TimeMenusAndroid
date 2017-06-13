@@ -6,12 +6,20 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
+
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.timemenus.android.models.Menu;
 import com.timemenus.android.services.AuthService;
 import com.timemenus.android.services.DataService;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.timemenus.android.services.FCMHelper;
+
+import java.util.Arrays;
 
 public class AdminActivity extends BaseActivity {
 
@@ -19,11 +27,12 @@ public class AdminActivity extends BaseActivity {
 //    private String todayNote;
     Menu menu=null;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
-        setSupportActionBar(myToolbar);
+//        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
+//        setSupportActionBar(myToolbar);
 
         String[] perms = {"android.permission.READ_EXTERNAL_STORAGE","android.permission.WRITE_EXTERNAL_STORAGE", "android.permission.CAMERA"};
 
@@ -84,6 +93,35 @@ public class AdminActivity extends BaseActivity {
         Intent intent = new Intent(this, AddItemActivity.class);
         startActivity(intent);
     }
+// to use in future to make a custom notification
+    public void createNotification(View view) {
+        Intent intent = new Intent(this, SendNotifActivity.class);
+        startActivity(intent);
+    }
+
+    public void menuIsLive(View view) {
+        Button btn = (Button) findViewById(R.id.menu_islive);
+        JsonObject obj = new JsonObject();
+        JsonArray newRedId = new JsonArray();
+
+        for(int x=0; x<DataService.getRegistrationIDs().toArray().length; x++){
+            newRedId.add(DataService.getRegistrationIDs().get(x).getName());
+        }
+
+        obj.add("registration_ids", newRedId);
+        JsonObject objBody = new JsonObject();
+        objBody.addProperty("body","Menu Ready");
+        obj.add("notification", objBody);
+        obj.addProperty("priority", 10);
+        String result = FCMHelper.sendNotification(obj);
+
+//        if(result == "failure") {
+//            System.out.println(result);
+            btn.setEnabled(false);
+//        }
+
+    }
+
 
     public boolean onOptionsItemSelected(MenuItem item) {
         Intent myIntent = new Intent(getApplicationContext(), DashboardActivity.class);
