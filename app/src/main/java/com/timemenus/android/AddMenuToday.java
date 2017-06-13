@@ -43,7 +43,7 @@ public class AddMenuToday extends BaseActivity {
 
     public void createNote(View view) {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("menues/");
+        DatabaseReference myRef = database.getReference("cafes/EXPRESSDC1/menues/");
         Menu menu = new Menu(note.getText().toString(), UtilsService.getTodayDate());
 
         myRef.push().setValue(menu);

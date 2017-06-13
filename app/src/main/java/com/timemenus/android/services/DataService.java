@@ -45,7 +45,7 @@ public class DataService {
     private static void setMenuListener() {
 
         System.out.println("setMenuListener");
-        DatabaseReference myRef = database.getReference("menues");
+        DatabaseReference myRef = database.getReference("cafes/EXPRESSDC1/menues");
         myRef.addValueEventListener(new ValueEventListener() {
 
 
@@ -90,7 +90,7 @@ public class DataService {
 
     private static void setCategoriesListener() {
 
-        DatabaseReference categoriesRef = database.getReference("categories");
+        DatabaseReference categoriesRef = database.getReference("cafes/EXPRESSDC1/categories");
         categoriesRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -120,7 +120,7 @@ public class DataService {
 
         if(todayMenu!=null){
 
-            DatabaseReference itemsRef = database.getReference("menues/"+todayMenu.getKey());
+            DatabaseReference itemsRef = database.getReference("cafes/EXPRESSDC1/menues/"+todayMenu.getKey());
             itemsRef.addValueEventListener(new ValueEventListener() {
 
                 @Override

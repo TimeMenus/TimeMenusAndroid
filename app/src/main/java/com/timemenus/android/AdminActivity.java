@@ -76,7 +76,7 @@ public class AdminActivity extends BaseActivity {
 
     public void saveNote(View view) {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("menues/" + menu.getKey() + "/note");
+        DatabaseReference myRef = database.getReference("cafes/EXPRESSDC1/menues/" + menu.getKey() + "/note");
         myRef.setValue(note.getText().toString());
     }
 

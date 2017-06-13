@@ -13,8 +13,8 @@ android {
         applicationId "com.timemenus.android"
         minSdkVersion 15
         targetSdkVersion 24
-        versionCode 4
-        versionName "1.3"
+        versionCode 7
+        versionName "1.7"
     }
     buildTypes {
         release {

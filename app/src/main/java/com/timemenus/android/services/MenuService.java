@@ -21,7 +21,7 @@ public class MenuService {
     public static String keyforTodayDate(final String todayDate) {
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("menues");
+        DatabaseReference myRef = database.getReference("cafes/EXPRESSDC1/menues");
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {

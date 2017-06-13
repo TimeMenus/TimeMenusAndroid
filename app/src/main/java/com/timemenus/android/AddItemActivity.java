@@ -119,7 +119,7 @@ public class AddItemActivity extends BaseActivity {
                 Item item = new Item(categoryID, dashboardSel, itemDescStr, itemNameStr, pic);
 
                 FirebaseDatabase database = FirebaseDatabase.getInstance();
-                DatabaseReference myRef = database.getReference("menues/" + DataService.getTodayMenu().getKey() + "/items");
+                DatabaseReference myRef = database.getReference("cafes/EXPRESSDC1/menues/" + DataService.getTodayMenu().getKey() + "/items");
                 myRef.push().setValue(item);
                 finish();
                 startActivity(getIntent());
